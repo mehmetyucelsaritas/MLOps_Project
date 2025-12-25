@@ -6,3 +6,4 @@ matplotlib==3.10.7
 scikit-learn==1.7.2
 invoke==2.2.0
 ruff==0.14.10
+mypy==1.19.0
