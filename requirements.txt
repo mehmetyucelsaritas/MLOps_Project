@@ -4,3 +4,4 @@ fastapi==0.115.12
 uvicorn==0.34.2
 matplotlib==3.10.7
 scikit-learn==1.7.2
+invoke==2.2.0
