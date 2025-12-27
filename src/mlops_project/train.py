@@ -3,9 +3,8 @@ import torch
 import typer
 import wandb
 
-from data import corrupt_mnist
-from model import MyAwesomeModel
-from sklearn.metrics import RocCurveDisplay, accuracy_score, f1_score, precision_score, recall_score
+from mlops_project.data import corrupt_mnist
+from mlops_project.model import MyAwesomeModel
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu")
 
