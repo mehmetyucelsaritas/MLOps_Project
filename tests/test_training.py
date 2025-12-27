@@ -1,6 +1,7 @@
-import pytest
 import torch
+
 from mlops_project.train import DEVICE, MyAwesomeModel
+
 
 def test_device():
     device = DEVICE

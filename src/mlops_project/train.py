@@ -14,7 +14,6 @@ def train(lr: float = 1e-3, batch_size: int = 32, epochs: int = 10) -> None:
     print("Training day and night")
     config = {"lr": lr, "batch_size": batch_size, "epochs": epochs}
     with wandb.init(project="corrupt_mnist", config=config) as run:
-
         print(f"{lr=}, {batch_size=}, {epochs=}")
 
         model = MyAwesomeModel().to(DEVICE)
@@ -42,14 +41,13 @@ def train(lr: float = 1e-3, batch_size: int = 32, epochs: int = 10) -> None:
                 wandb.log({"train_loss": loss.item(), "train_accuracy": accuracy})
                 if i % 100 == 0:
                     print(f"Epoch {epoch}, iter {i}, loss: {loss.item()}")
-                
 
         torch.save(model.state_dict(), "models/model.pth")
         artifact = wandb.Artifact(
-        name="corrupt_mnist_model",
-        type="model",
-        description="A model trained to classify corrupt MNIST images",
-        metadata={"accuracy": accuracy, "final_loss": loss.item()},
+            name="corrupt_mnist_model",
+            type="model",
+            description="A model trained to classify corrupt MNIST images",
+            metadata={"accuracy": accuracy, "final_loss": loss.item()},
         )
         artifact.add_file("models/model.pth")
         run.log_artifact(artifact)
@@ -61,6 +59,7 @@ def train(lr: float = 1e-3, batch_size: int = 32, epochs: int = 10) -> None:
     axs[1].plot(statistics["train_accuracy"])
     axs[1].set_title("Train accuracy")
     fig.savefig("reports/figures/training_statistics.png")
+
 
 if __name__ == "__main__":
     typer.run(train)
