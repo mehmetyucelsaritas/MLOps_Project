@@ -1,0 +1,19 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'Build container image'
+  args: [
+    'build',
+    '.',
+    '-t',
+    'europe-west6-docker.pkg.dev/dtumlops-482618/container-registry-mys/mlops-image',
+    '-f',
+    './exercises.dockerfile'
+  ]
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'Push container image'
+  args: [
+    'push',
+    europe-west6-docker.pkg.dev/dtumlops-482618/container-registry-mys/mlops-image
+  ]
+options:
+  logging: CLOUD_LOGGING_ONLY

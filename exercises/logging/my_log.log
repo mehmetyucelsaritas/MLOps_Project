@@ -1,0 +1,10 @@
+2025-12-26 19:03:22.493 | DEBUG    | __main__:<module>:6 - Used for debugging your code.
+2025-12-26 19:03:22.493 | INFO     | __main__:<module>:7 - Informative messages from your code.
+2025-12-26 19:03:22.493 | WARNING  | __main__:<module>:8 - Everything works but there is something to be aware of.
+2025-12-26 19:03:22.493 | ERROR    | __main__:<module>:9 - There's been a mistake with the process.
+2025-12-26 19:03:22.493 | CRITICAL | __main__:<module>:10 - There is something terribly wrong and process may terminate.
+2025-12-26 19:07:37.058 | DEBUG    | __main__:<module>:6 - Used for debugging your code.
+2025-12-26 19:07:37.058 | INFO     | __main__:<module>:7 - Informative messages from your code.
+2025-12-26 19:07:37.058 | WARNING  | __main__:<module>:8 - Everything works but there is something to be aware of.
+2025-12-26 19:07:37.058 | ERROR    | __main__:<module>:9 - There's been a mistake with the process.
+2025-12-26 19:07:37.058 | CRITICAL | __main__:<module>:10 - There is something terribly wrong and process may terminate.

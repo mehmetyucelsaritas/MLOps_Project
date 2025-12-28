@@ -1,5 +1,6 @@
 *.egg-info
 __pycache__*
-exercises/*
 .env
 .coverage
+exercises/hydra/*
+exercises/profiling/*
