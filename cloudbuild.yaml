@@ -3,7 +3,7 @@ steps:
   id: 'Build container image'
   args: [
     'build',
-    '.',
+    './exercises/cloud/',
     '-t',
     'europe-west6-docker.pkg.dev/dtumlops-482618/container-registry-mys/mlops-image',
     '-f',
