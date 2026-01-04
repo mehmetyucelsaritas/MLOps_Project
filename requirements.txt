@@ -19,3 +19,5 @@ fastapi==0.127.1
 uvicorn==0.39.0
 transformers==4.57.3
 httpx==0.28.0
+locust==2.43.0
+evidently==0.7.18

@@ -3,17 +3,32 @@ steps:
   id: 'Build container image'
   args: [
     'build',
-    './exercises/cloud/',
+    './exercises/deployment-cloud/',
     '-t',
-    'europe-west6-docker.pkg.dev/dtumlops-482618/container-registry-mys/mlops-image',
+    'europe-west1-docker.pkg.dev/dtumlops-482618/cloud-run-source-deploy/gcp_test_app',
     '-f',
-    './exercises/cloud/exercises.dockerfile'
+    './exercises/deployment-cloud/simple_fastapi_app.dockerfile'
   ]
 - name: 'gcr.io/cloud-builders/docker'
   id: 'Push container image'
   args: [
     'push',
-    europe-west6-docker.pkg.dev/dtumlops-482618/container-registry-mys/mlops-image
+    europe-west1-docker.pkg.dev/dtumlops-482618/cloud-run-source-deploy/gcp_test_app
+  ]
+- name: 'gcr.io/cloud-builders/gcloud'
+  id: 'Deploy to Cloud Run'
+  args: [
+    'run',
+    'deploy',
+    'simple-gcp-app',
+    '--image',
+    'europe-west1-docker.pkg.dev/dtumlops-482618/cloud-run-source-deploy/gcp_test_app',
+    '--region',
+    'europe-west1',
+    '--platform',
+    'managed',
+    # optional argument if you want to inject secrets as environment variables
+    '--update-secrets=<env-name-in-container>=<secret-name-in-secrets-manager>:latest'
   ]
 options:
   logging: CLOUD_LOGGING_ONLY
