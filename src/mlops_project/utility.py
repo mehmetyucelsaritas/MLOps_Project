@@ -19,7 +19,7 @@ class Parser:
         # Query
         self.parser.add_argument(
             "--query",
-            default="There is a wildfire approaching the south side of the city," \
+            default="There is a wildfire approaching the south side of the city,"
             " threatening homes and a nearby gas station. Winds are strong, and visibility is limited.",
             help="The query string to search for.",
         )
@@ -32,7 +32,9 @@ class Parser:
             "--model", type=str, default="models/all-MiniLM-L6-v2", help="Name of the sentence transformer model."
         )
 
-        self.parser.add_argument("--model_path", type=str, default="models/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf", help="Path to GGUF model")
+        self.parser.add_argument(
+            "--model_path", type=str, default="models/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf", help="Path to GGUF model"
+        )
         self.parser.add_argument("--n_gpu_layers", type=int, default=20, help="Number of GPU layers to offload")
         self.parser.add_argument("--context_length", type=int, default=4096, help="Max context length for LLM")
 

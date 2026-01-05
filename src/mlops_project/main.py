@@ -4,9 +4,8 @@ import faiss
 
 from mlops_project.model.embedding import Embedding
 from mlops_project.model.retrieve import Retrieve
-from mlops_project.utility import JsonHandler, Parser
-
 from mlops_project.rag_llm.rag_runner import RAGPipeline
+from mlops_project.utility import JsonHandler, Parser
 
 
 def main():
@@ -37,11 +36,7 @@ def main():
     for i, chunk in enumerate(retriever.results):
         print(f"[RESULT {i + 1}]:\n{chunk}\n")
 
-    rag = RAGPipeline(
-        model_path=args.model_path,
-        n_gpu_layers=args.n_gpu_layers,
-        context_length=args.context_length
-    )
+    rag = RAGPipeline(model_path=args.model_path, n_gpu_layers=args.n_gpu_layers, context_length=args.context_length)
     response = rag.run(args.query, retriever.results)
     print("\n[LLM RESPONSE]:\n", response)
 
