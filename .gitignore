@@ -1,3 +1,5 @@
 models/*
 *.egg-info
 *__pycache__
+src/mlops_project/evaluate/*
+*.idea
