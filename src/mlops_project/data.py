@@ -51,7 +51,7 @@ def save_text_to_file(text, output_path):
         file.write(text)
 
 
-def process_pdf_files(dataset_folder):
+def process_pdf_files(dataset_folder, processed_folder):
     """Process all PDF files in the dataset folder."""
     metadata = []
     for filename in os.listdir(dataset_folder):
@@ -59,13 +59,14 @@ def process_pdf_files(dataset_folder):
             pdf_path = os.path.join(dataset_folder, filename)
             text = extract_clean_text_from_pdf(pdf_path)
             text_filename = filename.replace('.pdf', '.txt')
-            text_path = os.path.join(dataset_folder, 'text', text_filename)
+            text_path = os.path.join(processed_folder, text_filename)
             os.makedirs(os.path.dirname(text_path), exist_ok=True)
             save_text_to_file(text, text_path)
 
 if __name__ == "__main__":
-    dataset_folder = 'data' 
+    dataset_folder = 'data/raw' 
+    processed_folder = 'data/processed'
     if os.path.exists(dataset_folder):
-        process_pdf_files(dataset_folder)
+        process_pdf_files(dataset_folder, processed_folder)
     else:
         print(f"Dataset folder '{dataset_folder}' does not exist.")
