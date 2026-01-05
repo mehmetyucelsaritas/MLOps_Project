@@ -1,5 +1,5 @@
-from rag_llm.llm_handler import LLMHandler
-from rag_llm.prompt_builder import PromptBuilder
+from mlops_project.rag_llm.llm_handler import LLMHandler
+from mlops_project.rag_llm.prompt_builder import PromptBuilder
 
 
 class RAGPipeline:

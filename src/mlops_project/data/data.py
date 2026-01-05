@@ -66,11 +66,15 @@ def process_pdf_files(dataset_folder, processed_folder):
             os.makedirs(os.path.dirname(text_path), exist_ok=True)
             save_text_to_file(text, text_path)
 
-
-if __name__ == "__main__":
+def main():
     dataset_folder = "data/raw"
     processed_folder = "data/processed"
     if os.path.exists(dataset_folder):
         process_pdf_files(dataset_folder, processed_folder)
     else:
         print(f"Dataset folder '{dataset_folder}' does not exist.")
+
+
+if __name__ == "__main__":
+    main()
+
