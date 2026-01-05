@@ -1,9 +1,11 @@
-from mlops_project.model.embedding import Embedding
+import faiss  # Store embedded ckunks as database
 import numpy as np
-import faiss   # Store embedded ckunks as database
-from sentence_transformers import SentenceTransformer # Embed chunks to vector
+from sentence_transformers import SentenceTransformer  # Embed chunks to vector
 
-class Retrieve():
+from mlops_project.model.embedding import Embedding
+
+
+class Retrieve:
     """
     A class to perform similarity-based retrieval on embedded text chunks using FAISS.
 
@@ -16,7 +18,9 @@ class Retrieve():
         results (List[str]): Top-k most relevant chunks for the query.
     """
 
-    def __init__(self, query: str, chunks: list, json_chunks: list, top_k: int, model_name: str, index_path: str) -> list:
+    def __init__(
+        self, query: str, chunks: list, json_chunks: list, top_k: int, model_name: str, index_path: str
+    ) -> list:
         self.top_k = top_k
         self.index = faiss.read_index(index_path)
         self.query = query
@@ -32,14 +36,12 @@ class Retrieve():
         Returns:
             List[str]: The list of top-k relevant text chunks.
         """
-        
+
         query_vec = self.model.encode([self.query])
-        D, I = self.index.search(np.array(query_vec), self.top_k)
+        d, i = self.index.search(np.array(query_vec), self.top_k)
 
         results = []
-        for idx in I[0]:
+        for idx in i[0]:
             results.append(self.json_chunks[idx])  # Directly use chunk text
 
         return results
-
-

@@ -1,7 +1,7 @@
-import os
 import json
-from mlops_project.model.chunking import Chunking
+import os
 
+from mlops_project.model.chunking import Chunking
 
 txt_folder = "./data/processed"
 task1_metadata_path = "./data/raw/all_metadata.json"
@@ -17,7 +17,7 @@ task2_metadata = []
 for fname in os.listdir(txt_folder):
     if fname.endswith(".txt"):
         txt_path = os.path.join(txt_folder, fname)
-        chunks = Chunking(txt_path, max_words = 300, min_words=100, task1_metadata=task1_table)
+        chunks = Chunking(txt_path, max_words=300, min_words=100, task1_metadata=task1_table)
 
         task2_metadata.extend(chunks.chunk_items)
 

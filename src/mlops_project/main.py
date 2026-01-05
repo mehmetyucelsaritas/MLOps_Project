@@ -1,14 +1,17 @@
 import os
+
 import faiss
-from mlops_project.utility import Parser, JsonHandler
+
 from mlops_project.model.embedding import Embedding
 from mlops_project.model.retrieve import Retrieve
+from mlops_project.utility import JsonHandler, Parser
+
 # from RAG_LLM.rag_runner import RAGPipeline
 
 
 def main():
     # Flag to decide whether to update (rebuild) the FAISS index database
-    update_index = True 
+    update_index = True
     # Initialize argument parser and parse command line arguments
     arg_parser = Parser()
     args = arg_parser.args
@@ -24,20 +27,15 @@ def main():
         faiss.write_index(embedder.index, f"{args.index_path}")
         print(f"index database saved to {args.index_path}")
 
-    # Create a retriever object which handles querying with given parameters,    
+    # Create a retriever object which handles querying with given parameters,
     retriever = Retrieve(
-        args.query, 
-        json_handler.dataset_str, 
-        json_handler.dataset_json, 
-        args.top_k, 
-        args.model, 
-        args.index_path
+        args.query, json_handler.dataset_str, json_handler.dataset_json, args.top_k, args.model, args.index_path
     )
-    
+
     # Outputs
     print(f"[QUERY]: {args.query}\n")
     for i, chunk in enumerate(retriever.results):
-        print(f"[RESULT {i+1}]:\n{chunk}\n")
+        print(f"[RESULT {i + 1}]:\n{chunk}\n")
 
     # rag = RAGPipeline(
     #     model_path=args.model_path,
@@ -46,6 +44,7 @@ def main():
     # )
     # response = rag.run(args.query, retriever.results)
     # print("\n[LLM RESPONSE]:\n", response)
+
 
 if __name__ == "__main__":
     main()

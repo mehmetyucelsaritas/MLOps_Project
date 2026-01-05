@@ -1,26 +1,29 @@
-import nltk    # Chunk the text 
-from nltk.tokenize import sent_tokenize
 import os
-#sent_tokenize()
+
+import nltk  # Chunk the text
+from nltk.tokenize import sent_tokenize
+
+# sent_tokenize()
 
 # Characters to be removed.
 invisible_chars = [
-    '\u200b',  # zero-width space
-    '\u200c',  # zero-width non-joiner
-    '\u200d',  # zero-width joiner
-    '\u2060',  # word joiner
-    '\ufeff',  # byte order mark
-    '\x0c',    # non-breaking space
-    '\n',      # new line
-    '\xad',    # do not know
-    '\t',      # tab
-    '•',       # bullet
+    "\u200b",  # zero-width space
+    "\u200c",  # zero-width non-joiner
+    "\u200d",  # zero-width joiner
+    "\u2060",  # word joiner
+    "\ufeff",  # byte order mark
+    "\x0c",  # non-breaking space
+    "\n",  # new line
+    "\xad",  # do not know
+    "\t",  # tab
+    "•",  # bullet
 ]
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 NLTK_DATA_PATH = os.path.join(REPO_ROOT, "..", "models", "nltk_data")
 
-class Chunking():
+
+class Chunking:
     """
     A class for processing and chunking text into manageable sections based on word count.
 
@@ -31,7 +34,7 @@ class Chunking():
         content (str): The cleaned content of the text file.
         chunks (List[str]): A list of text chunks produced from the content.
     """
-        
+
     def __init__(self, text_path, max_words, min_words, task1_metadata=None):
         nltk.data.path.insert(0, NLTK_DATA_PATH)
         # nltk.download('punkt_tab')
@@ -51,11 +54,11 @@ class Chunking():
             str: Cleaned content of the text file.
         """
 
-        with open(self.text_path, 'r', encoding='utf-8') as file:
+        with open(self.text_path, "r", encoding="utf-8") as file:
             content = file.read()
 
         for char in invisible_chars:
-            content = content.replace(char, '')
+            content = content.replace(char, "")
 
         return content
 
@@ -72,9 +75,9 @@ class Chunking():
         Returns:
             List[str]: List of text chunks.
         """
-        
+
         sentences = sent_tokenize(text)
-        chunks = [] #？
+        chunks = []  # ？
         current_chunk = []
         current_len = 0
 
@@ -94,7 +97,7 @@ class Chunking():
                 current_chunk.append(sentence)
                 current_len += sentence_words
             else:
-                if current_len >= min_words: #
+                if current_len >= min_words:  #
                     chunks.append(" ".join(current_chunk))
                     current_chunk = [sentence]
                     current_len = sentence_words
@@ -107,23 +110,25 @@ class Chunking():
 
         return chunks
 
-    #new function
+    # new function
     def generate_metadata(self, task1_metadata):
         if task1_metadata is None:
             return [{"text": chunk} for chunk in self.chunks]
 
-        pdf_filename = os.path.basename(self.text_path).replace('.txt', '.pdf')
-        task1_entry = task1_metadata.get(pdf_filename,{})
+        pdf_filename = os.path.basename(self.text_path).replace(".txt", ".pdf")
+        task1_entry = task1_metadata.get(pdf_filename, {})
 
         metadata_chunks = []
         for i, chunk in enumerate(self.chunks):
-            metadata_chunks.append({
-                "text": chunk,
-                "source": pdf_filename,
-                "topic": task1_entry.get("topic", ""),
-                "region": task1_entry.get("region", ""),
-                "source_name": task1_entry.get("source_name", ""),
-                "language": task1_entry.get("language", ""),
-                "summary": task1_entry.get("summary", "")
-            })
+            metadata_chunks.append(
+                {
+                    "text": chunk,
+                    "source": pdf_filename,
+                    "topic": task1_entry.get("topic", ""),
+                    "region": task1_entry.get("region", ""),
+                    "source_name": task1_entry.get("source_name", ""),
+                    "language": task1_entry.get("language", ""),
+                    "summary": task1_entry.get("summary", ""),
+                }
+            )
         return metadata_chunks

@@ -1,8 +1,9 @@
-import faiss   # Store embedded ckunks as database
+import faiss  # Store embedded ckunks as database
 import numpy as np
-from sentence_transformers import SentenceTransformer # Embed chunks to vector
+from sentence_transformers import SentenceTransformer  # Embed chunks to vector
 
-class Embedding():
+
+class Embedding:
     """
     A class for embedding text chunks using a SentenceTransformer model
     and storing them in a FAISS index for efficient similarity search.
@@ -37,7 +38,7 @@ class Embedding():
         Returns:
             faiss.IndexFlatL2: A flat L2 FAISS index with the embedded vectors.
         """
-        
+
         dim = len(self.embeddings[0])
         index = faiss.IndexFlatL2(dim)
         index.add(np.array(self.embeddings))

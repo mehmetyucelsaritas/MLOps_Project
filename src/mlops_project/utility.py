@@ -1,31 +1,44 @@
-import json
-from typing import List, Dict, Any
 import argparse
+import json
+from typing import Any, Dict, List
 
-class Parser():
+
+class Parser:
     def __init__(self):
         self.parser = argparse.ArgumentParser(description="Semantic PDF search using embedding and retrieval.")
 
         # File paths
         # parser.add_argument("--txt_path", default="../out/output.txt", help="Path to save extracted text.")
         self.parser.add_argument("--index_path", default="models/index.faiss", help="Path to save index database.")
-        self.parser.add_argument("--tokenizer_path", default="models/nltk_data/tokenizers", help="Path to save tokenizer models.")
-        self.parser.add_argument("--metadata_path", default="data/processed/chunking_metadata.json", help="Path to save chunking database")
+        self.parser.add_argument(
+            "--tokenizer_path", default="models/nltk_data/tokenizers", help="Path to save tokenizer models."
+        )
+        self.parser.add_argument(
+            "--metadata_path", default="data/processed/chunking_metadata.json", help="Path to save chunking database"
+        )
         # Query
-        self.parser.add_argument("--query", default="There is a wildfire approaching the south side of the city, threatening homes and a nearby gas station. Winds are strong, and visibility is limited.", help="The query string to search for.")
+        self.parser.add_argument(
+            "--query",
+            default="There is a wildfire approaching the south side of the city," \
+            " threatening homes and a nearby gas station. Winds are strong, and visibility is limited.",
+            help="The query string to search for.",
+        )
 
         # Parameters
         self.parser.add_argument("--max_words", type=int, default=250, help="Maximum number of words per chunk.")
         self.parser.add_argument("--min_words", type=int, default=100, help="Minimum number of words per chunk.")
         self.parser.add_argument("--top_k", type=int, default=3, help="Number of top similar chunks to return.")
-        self.parser.add_argument("--model", type=str, default="models/all-MiniLM-L6-v2", help="Name of the sentence transformer model.")
+        self.parser.add_argument(
+            "--model", type=str, default="models/all-MiniLM-L6-v2", help="Name of the sentence transformer model."
+        )
 
         # self.parser.add_argument("--model_path", type=str, required=True, help="Path to GGUF model")
         # self.parser.add_argument("--n_gpu_layers", type=int, default=20, help="Number of GPU layers to offload")
         # self.parser.add_argument("--context_length", type=int, default=4096, help="Max context length for LLM")
 
         self.args = self.parser.parse_args()
-        
+
+
 class JsonHandler:
     """
     A utility class for loading a JSON file consisting of a list of dictionaries,
@@ -56,7 +69,7 @@ class JsonHandler:
         Opens and loads the JSON file into memory.
         """
         try:
-            with open(self.metadata_path, 'r', encoding='utf-8') as file:
+            with open(self.metadata_path, "r", encoding="utf-8") as file:
                 self.dataset_json = json.load(file)
         except FileNotFoundError:
             raise FileNotFoundError(f"File not found at: {self.metadata_path}")
