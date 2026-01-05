@@ -3,4 +3,11 @@ nltk==3.9.2
 numpy==2.4.0
 faiss-cpu==1.13.2
 sentence-transformers==5.2.0
+llama-cpp-python==0.3.16
+streamlit==1.52.2
+# langchain-core==1.2.6
+# langchain-google-genai==4.1.2
+# spacy==3.8.11
+# ragas==0.4.2
+# python-dotenv==1.2.1
 ruff==0.14.10
