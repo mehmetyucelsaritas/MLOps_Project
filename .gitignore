@@ -3,3 +3,4 @@ models/*
 *__pycache__
 src/mlops_project/evaluate/*
 *.idea
+TODO.txt

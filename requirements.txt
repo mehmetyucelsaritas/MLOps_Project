@@ -11,3 +11,4 @@ streamlit==1.52.2
 # ragas==0.4.2
 # python-dotenv==1.2.1
 ruff==0.14.10
+mypy==1.19.1

@@ -35,7 +35,7 @@ class Chunking:
         chunks (List[str]): A list of text chunks produced from the content.
     """
 
-    def __init__(self, text_path, max_words, min_words, task1_metadata=None):
+    def __init__(self, text_path: str, max_words: int, min_words: int, task1_metadata = None) -> None:
         nltk.data.path.insert(0, NLTK_DATA_PATH)
         # nltk.download('punkt_tab')
         self.text_path = text_path
@@ -62,7 +62,7 @@ class Chunking:
 
         return content
 
-    def chunk_text(self, text, max_words=300, min_words=100):
+    def chunk_text(self, text: str, max_words: int = 300, min_words: int = 100):
         """
         Splits the text into chunks based on word count, attempting to keep chunks
         within the [min_words, max_words] range when possible.
@@ -77,8 +77,8 @@ class Chunking:
         """
 
         sentences = sent_tokenize(text)
-        chunks = []  # ？
-        current_chunk = []
+        chunks = []
+        current_chunk: list[str] = []
         current_len = 0
 
         for sentence in sentences:
@@ -110,7 +110,7 @@ class Chunking:
 
         return chunks
 
-    # new function
+
     def generate_metadata(self, task1_metadata):
         if task1_metadata is None:
             return [{"text": chunk} for chunk in self.chunks]
