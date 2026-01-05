@@ -17,6 +17,9 @@ invisible_chars = [
     '•',       # bullet
 ]
 
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+NLTK_DATA_PATH = os.path.join(REPO_ROOT, "..", "models", "nltk_data")
+
 class Chunking():
     """
     A class for processing and chunking text into manageable sections based on word count.
@@ -30,7 +33,8 @@ class Chunking():
     """
         
     def __init__(self, text_path, max_words, min_words, task1_metadata=None):
-        nltk.download('punkt') #
+        nltk.data.path.insert(0, NLTK_DATA_PATH)
+        # nltk.download('punkt_tab')
         self.text_path = text_path
         self.max_words = max_words
         self.min_words = min_words
