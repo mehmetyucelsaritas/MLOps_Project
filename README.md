@@ -29,6 +29,15 @@ Next, execute this line in a terminal (PowerShell) in the repositories root:
 docker build -t amifgptv1 . ; docker run -p 8501:8501 -it amifgptv1
 ```
 
+You can also use project scripts on terminal for processing data, building metadata, running firegpt and runnig firegpt gui respectively.
+
+```
+data
+build_metadata
+firegpt
+firegpt-gui
+```
+
 In the terminal you should see the link to the web interface. 
 Otherwise go to http://127.0.0.1:8501
 
