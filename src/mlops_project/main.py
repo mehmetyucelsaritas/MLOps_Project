@@ -6,12 +6,12 @@ from mlops_project.model.embedding import Embedding
 from mlops_project.model.retrieve import Retrieve
 from mlops_project.utility import JsonHandler, Parser
 
-# from RAG_LLM.rag_runner import RAGPipeline
+from mlops_project.rag_llm.rag_runner import RAGPipeline
 
 
 def main():
     # Flag to decide whether to update (rebuild) the FAISS index database
-    update_index = True
+    update_index = False
     # Initialize argument parser and parse command line arguments
     arg_parser = Parser()
     args = arg_parser.args
@@ -37,13 +37,13 @@ def main():
     for i, chunk in enumerate(retriever.results):
         print(f"[RESULT {i + 1}]:\n{chunk}\n")
 
-    # rag = RAGPipeline(
-    #     model_path=args.model_path,
-    #     n_gpu_layers=args.n_gpu_layers,
-    #     context_length=args.context_length
-    # )
-    # response = rag.run(args.query, retriever.results)
-    # print("\n[LLM RESPONSE]:\n", response)
+    rag = RAGPipeline(
+        model_path=args.model_path,
+        n_gpu_layers=args.n_gpu_layers,
+        context_length=args.context_length
+    )
+    response = rag.run(args.query, retriever.results)
+    print("\n[LLM RESPONSE]:\n", response)
 
 
 if __name__ == "__main__":
