@@ -37,5 +37,3 @@ omit = ["tests/*"]
 [project.scripts]
 data = "mlops_project.data.data:main"
 build_metadata = "mlops_project.data.build_metadata:main"
-firegpt = "mlops_project.main:main"
-firegpt-gui = "mlops_project.gui.run:main"

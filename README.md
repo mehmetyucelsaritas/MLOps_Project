@@ -34,8 +34,8 @@ You can also use project scripts on terminal for processing data, building metad
 ```
 data
 build_metadata
-firegpt
-firegpt-gui
+python3 src/mlops_project/main.py
+python3 src/mlops_project/gui/gui.py
 ```
 
 In the terminal you should see the link to the web interface. 
