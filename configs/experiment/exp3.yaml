@@ -1,0 +1,12 @@
+# @package _group_
+index_path: "models/index.faiss"
+tokenizer_path: "models/nltk_data/tokenizers"
+metadata_path: "data/processed/chunking_metadata.json"
+query: "There is a wildfire approaching the south side of the city, threatening homes and a nearby gas station. Winds are strong, and visibility is limited."
+max_words: 250
+min_words: 100
+top_k: 3
+model: "models/all-MiniLM-L6-v2"
+model_path: "models/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf"
+n_gpu_layers: -1
+context_length: 2048
