@@ -1,18 +1,19 @@
 import os
 
 import faiss
+import hydra
 
 from mlops_project.model.embedding import Embedding
 from mlops_project.model.retrieve import Retrieve
 from mlops_project.rag_llm.rag_runner import RAGPipeline
 from mlops_project.utility import JsonHandler, Parser
 
-
-def main():
+@hydra.main(version_base="1.3", config_path="../../configs", config_name="default_config.yaml")
+def main(config):
     # Flag to decide whether to update (rebuild) the FAISS index database
     update_index = False
     # Initialize argument parser and parse command line arguments
-    arg_parser = Parser()
+    arg_parser = Parser(config)
     args = arg_parser.args
 
     # -------------------- PIPELINE EXECUTION -------------------------

@@ -1,4 +1,4 @@
-# @package _group_
+# configs/experiment/exp1.yaml
 index_path: "models/index.faiss"
 tokenizer_path: "models/nltk_data/tokenizers"
 metadata_path: "data/processed/chunking_metadata.json"

@@ -1,2 +1,6 @@
 defaults:
   - experiment: exp3.yaml
+
+hydra:
+  run:
+    dir: configs/outputs/${now:%Y-%m-%d_%H-%M-%S}

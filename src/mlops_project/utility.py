@@ -4,39 +4,26 @@ from typing import Any, Dict, List
 
 
 class Parser:
-    def __init__(self):
+    def __init__(self, config):
         self.parser = argparse.ArgumentParser(description="Semantic PDF search using embedding and retrieval.")
-
+        
+        parameters = config.experiment
         # File paths
-        # parser.add_argument("--txt_path", default="../out/output.txt", help="Path to save extracted text.")
-        self.parser.add_argument("--index_path", default="models/index.faiss", help="Path to save index database.")
-        self.parser.add_argument(
-            "--tokenizer_path", default="models/nltk_data/tokenizers", help="Path to save tokenizer models."
-        )
-        self.parser.add_argument(
-            "--metadata_path", default="data/processed/chunking_metadata.json", help="Path to save chunking database"
-        )
+        self.parser.add_argument("--index_path", default=parameters["index_path"], help="Path to save index database.")
+        self.parser.add_argument("--tokenizer_path", default=parameters["tokenizer_path"], help="Path to save tokenizer models.")
+        self.parser.add_argument("--metadata_path", default=parameters["metadata_path"], help="Path to save chunking database")
         # Query
-        self.parser.add_argument(
-            "--query",
-            default="There is a wildfire approaching the south side of the city,"
-            " threatening homes and a nearby gas station. Winds are strong, and visibility is limited.",
-            help="The query string to search for.",
-        )
+        self.parser.add_argument("--query", default=parameters["query"], help="The query string to search for.")
 
         # Parameters
-        self.parser.add_argument("--max_words", type=int, default=250, help="Maximum number of words per chunk.")
-        self.parser.add_argument("--min_words", type=int, default=100, help="Minimum number of words per chunk.")
-        self.parser.add_argument("--top_k", type=int, default=3, help="Number of top similar chunks to return.")
-        self.parser.add_argument(
-            "--model", type=str, default="models/all-MiniLM-L6-v2", help="Name of the sentence transformer model."
-        )
+        self.parser.add_argument("--max_words", type=int, default=parameters["max_words"], help="Maximum number of words per chunk.")
+        self.parser.add_argument("--min_words", type=int, default=parameters["min_words"], help="Minimum number of words per chunk.")
+        self.parser.add_argument("--top_k", type=int, default=parameters["top_k"], help="Number of top similar chunks to return.")
+        self.parser.add_argument("--model", type=str, default=parameters["model"], help="Name of the sentence transformer model.")
 
-        self.parser.add_argument(
-            "--model_path", type=str, default="models/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf", help="Path to GGUF model"
-        )
-        self.parser.add_argument("--n_gpu_layers", type=int, default=-1, help="Number of GPU layers to offload")
-        self.parser.add_argument("--context_length", type=int, default=2048, help="Max context length for LLM")
+        self.parser.add_argument("--model_path", type=str, default=parameters["model_path"], help="Path to GGUF model")
+        self.parser.add_argument("--n_gpu_layers", type=int, default=parameters["n_gpu_layers"], help="Number of GPU layers to offload")
+        self.parser.add_argument("--context_length", type=int, default=parameters["context_length"], help="Max context length for LLM")
 
         self.args = self.parser.parse_args()
 
