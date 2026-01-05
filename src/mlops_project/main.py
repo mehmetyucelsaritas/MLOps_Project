@@ -8,7 +8,7 @@ from mlops_project.model.retrieve import Retrieve
 
 def main():
     # Flag to decide whether to update (rebuild) the FAISS index database
-    update_index = False 
+    update_index = True 
     # Initialize argument parser and parse command line arguments
     arg_parser = Parser()
     args = arg_parser.args

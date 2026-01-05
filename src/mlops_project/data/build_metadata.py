@@ -5,7 +5,7 @@ from mlops_project.model.chunking import Chunking
 
 txt_folder = "./data/processed"
 task1_metadata_path = "./data/raw/all_metadata.json"
-output_metadata_path = "./data/processed/task2_metadata.json"
+output_metadata_path = "./data/processed/chunking_metadata.json"
 
 with open(task1_metadata_path, "r", encoding="utf-8") as f:
     task1_metadata = json.load(f)
