@@ -66,19 +66,19 @@ will check the repositories and the code to verify your answers.
 * [x] Add command line interfaces and project commands to your code where it makes sense (M9)
 * [x] Construct one or multiple docker files for your code (M10)
 * [x] Build the docker files locally and make sure they work as intended (M10)
-* [ ] Write one or multiple configurations files for your experiments (M11)
-* [ ] Used Hydra to load the configurations and manage your hyperparameters (M11)
-* [ ] Use profiling to optimize your code (M12)
-* [ ] Use logging to log important events in your code (M14)
+* [x] Write one or multiple configurations files for your experiments (M11)
+* [x] Used Hydra to load the configurations and manage your hyperparameters (M11)
+* [x] Use profiling to optimize your code (M12)
+* [x] Use logging to log important events in your code (M14)
 * [ ] Use Weights & Biases to log training progress and other important metrics/artifacts in your code (M14)
 * [ ] Consider running a hyperparameter optimization sweep (M14)
 * [ ] Use PyTorch-lightning (if applicable) to reduce the amount of boilerplate in your code (M15)
 
 ### Week 2
 
-* [ ] Write unit tests related to the data part of your code (M16)
-* [ ] Write unit tests related to model construction and or model training (M16)
-* [ ] Calculate the code coverage (M16)
+* [x] Write unit tests related to the data part of your code (M16)
+* [x] Write unit tests related to model construction and or model training (M16)
+* [x] Calculate the code coverage (M16)
 * [ ] Get some continuous integration running on the GitHub repository (M17)
 * [ ] Add caching and multi-os/python/pytorch testing to your continuous integration (M17)
 * [ ] Add a linting step to your continuous integration (M17)
@@ -131,9 +131,9 @@ will check the repositories and the code to verify your answers.
 >
 > *sXXXXXX, sXXXXXX, sXXXXXX*
 >
-> Answer:
+> Answer: 
 
---- question 2 fill here ---
+s256629
 
 ### Question 3
 > **A requirement to the project is that you include a third-party package not covered in the course. What framework**
@@ -147,7 +147,16 @@ will check the repositories and the code to verify your answers.
 >
 > Answer:
 
---- question 3 fill here ---
+I chose to work with the **FAISS (Facebook AI Similarity Search)** library to implement the vector retrieval component of the project. FAISS played a critical role in building the Retrieval-Augmented Generation (RAG) pipeline by enabling efficient storage and similarity search over high-dimensional text embeddings.
+
+The FAISS library was used in two main stages of the system:
+
+- **Indexing:** In `embedding.py`, I used the `IndexFlatL2` class to construct a flat L2-distance index. The `add` method was then used to store the vector embeddings of the generated text chunks in the index.
+
+- **Retrieval:** In `retrieve.py`, I employed the `read_index` function to load the stored FAISS index from disk and used the `search` method to retrieve the top-*k* most similar text chunks for a given query embedding.
+
+Integrating FAISS enabled efficient and accurate retrieval of relevant contextual information—such as wildfire response protocols—from the dataset. This retrieved context was subsequently passed to the `PromptBuilder`, allowing the language model to generate more accurate and context-aware action plans.
+
 
 ## Coding environment
 
@@ -167,7 +176,18 @@ will check the repositories and the code to verify your answers.
 >
 > Answer:
 
---- question 4 fill here ---
+To ensure robust dependency management and proper environment isolation, this project uses **Miniconda**, **pipreqs**, **Docker**, and **Git**.
+
+A dedicated **Conda environment** was created to avoid conflicts with other projects that may rely on different package versions. Dependency files were generated as follows:
+- **`requirements.txt`** was created by explicitly recording the versions of all used Python packages.
+- **`environment.yml`** was generated using a Conda environment export.
+
+To guarantee a fully reproducible development environment, the project was containerized using **Docker**.
+
+New team members can clone the GitHub repository and run the following commands to build and start the Docker container:
+
+``` docker build -t amifgptv1 . docker run -p 8501:8501 -it amifgptv1 ```
+
 
 ### Question 5
 
@@ -183,7 +203,33 @@ will check the repositories and the code to verify your answers.
 >
 > Answer:
 
---- question 5 fill here ---
+This project was initialized using **Cookiecutter**, which provided a standardized and well-organized starting template.
+
+- **`config/`**  
+  Contains configuration files for the project, such as framework and environment settings.
+
+- **`data/`**  
+  Stores all project-related data in my case pdf files that is used in RAG pipeline.
+
+- **`models/`**  
+  Contains the imported model used in the project.
+
+- **`reports/`**  
+  Contains exam report and assets related to the report.
+
+- **`outputs/`**  
+  Stores generated outputs such as performance metrics and analysis results.
+
+- **`src/`**  
+  Contains the project’s source code, including the model scripts located at `mlops_project/models/*`.
+
+- **`tests/`**  
+  Includes all test cases and testing scripts, organized into subdirectories.
+
+Compared to the original Cookiecutter template:
+- The `LICENSE`, `notebooks`, and `references` directories were removed as they were not relevant to this project.
+- A dedicated **`outputs/`** directory was added to improve output tracking.
+
 
 ### Question 6
 
@@ -198,7 +244,16 @@ will check the repositories and the code to verify your answers.
 >
 > Answer:
 
---- question 6 fill here ---
+To ensure a maintainable and robust codebase, I adhered to strict development guidelines throughout the project.
+
+* **Typing:** I utilized **mypy** for static type checking. All functions include type hints to ensure data consistency (e.g., `query: str` in `retrieve.py`).
+* **Documentation:** I adopted **Google-style docstrings** for all classes and methods. This ensures that components like the `Retrieve` class and `Embedding` class are self-explanatory and easy to integrate.
+* **Formatting:**  I utilized **Ruff** for code formatting and linting to maintain compliance with PEP8 standards.
+
+In larger projects, these practices are crucial for **scalability** and **collaboration**:
+1.  **Maintainability:** Automated linting and formatting prevent "style wars" during code reviews.
+2.  **Bug Prevention:** Strict type hinting catches data mismatches early in the development cycle before they cause runtime errors.
+3.  **Onboarding:** Comprehensive documentation allows new contributors to understand the system architecture—such as how the `PromptBuilder` constructs inputs—without needing to reverse-engineer the source code.
 
 ## Version control
 
@@ -217,7 +272,8 @@ will check the repositories and the code to verify your answers.
 >
 > Answer:
 
---- question 7 fill here ---
+In total, I implemented **around 18 tests** covering unit, integration behavior. The tests primarily focus on the most critical parts of the application, including text preprocessing and chunking (removal of invisible characters, sentence splitting, and metadata generation), embedding creation and FAISS index construction, and similarity-based retrieval. In addition, data ingestion utilities such as PDF text extraction, broken-word fixing, file saving, and metadata building are tested. External dependencies (NLTK, SentenceTransformer, FAISS, and pdfplumber) are mocked to ensure fast, deterministic, and isolated tests.
+
 
 ### Question 8
 
@@ -232,7 +288,8 @@ will check the repositories and the code to verify your answers.
 >
 > Answer:
 
---- question 8 fill here ---
+Total coverage is 92%. No, achieving 100% code coverage does not guarantee that the code is free of errors. Code coverage only indicates the proportion of code executed during tests, but it does not reflect the quality of the tests or verify that the logic is correct. Even if every line is executed, bugs or logical errors may still exist. Furthermore, code coverage does not capture edge cases or unexpected inputs that could cause failures. Therefore, thorough testing and code reviews remain essential for ensuring code quality and reliability. In our project, we have **100% code coverage** for the embedding model (`embedding.py`) and the retrieve (`retrieve.py`). The training script and visualization script are included, but since I did not develop them, they are not covered by our tests.
+
 
 ### Question 9
 
