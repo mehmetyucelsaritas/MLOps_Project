@@ -5,3 +5,7 @@ omit =
     */_remote_module_non_scriptable.py
     */tmp/*
     */temp/*
+    */train.py
+    */utility.py
+    */main.py
+    */visualize.py
