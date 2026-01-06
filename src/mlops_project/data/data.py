@@ -66,6 +66,7 @@ def process_pdf_files(dataset_folder, processed_folder):
             os.makedirs(os.path.dirname(text_path), exist_ok=True)
             save_text_to_file(text, text_path)
 
+
 def main():
     dataset_folder = "data/raw"
     processed_folder = "data/processed"
@@ -77,4 +78,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

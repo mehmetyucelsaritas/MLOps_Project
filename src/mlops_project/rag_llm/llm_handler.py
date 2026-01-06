@@ -1,7 +1,9 @@
-import sys
 import os
+import sys
 from contextlib import contextmanager
+
 from llama_cpp import Llama
+
 
 @contextmanager
 def suppress_stderr():
@@ -12,6 +14,7 @@ def suppress_stderr():
     finally:
         sys.stderr.close()
         sys.stderr = old_stderr
+
 
 class LLMHandler:
     def __init__(self, model_path: str, n_gpu_layers: int, context_length: int):

@@ -35,7 +35,7 @@ class Chunking:
         chunks (List[str]): A list of text chunks produced from the content.
     """
 
-    def __init__(self, text_path: str, max_words: int, min_words: int, task1_metadata = None) -> None:
+    def __init__(self, text_path: str, max_words: int, min_words: int, task1_metadata=None) -> None:
         nltk.data.path.insert(0, NLTK_DATA_PATH)
         # nltk.download('punkt_tab')
         self.text_path = text_path
@@ -109,7 +109,6 @@ class Chunking:
             chunks.append(" ".join(current_chunk))
 
         return chunks
-
 
     def generate_metadata(self, task1_metadata):
         if task1_metadata is None:

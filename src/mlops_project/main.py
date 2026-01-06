@@ -9,6 +9,7 @@ from mlops_project.model.retrieve import Retrieve
 from mlops_project.rag_llm.rag_runner import RAGPipeline
 from mlops_project.utility import JsonHandler, Parser
 
+
 @hydra.main(version_base="1.3", config_path="../../configs", config_name="default_config.yaml")
 def main(config):
     # Flag to decide whether to update (rebuild) the FAISS index database
@@ -30,7 +31,7 @@ def main(config):
     if update_index:
         embedder = Embedding(json_handler.dataset_str, args.model)
         faiss.write_index(embedder.index, f"{args.index_path}")
-        logger.info(f"index database saved to path {args.index_path}")
+        logger.info(f"index database saved to path {args.index_path}\n")
 
     # Create a retriever object which handles querying with given parameters,
     retriever = Retrieve(
