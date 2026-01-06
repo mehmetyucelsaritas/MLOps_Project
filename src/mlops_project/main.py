@@ -2,6 +2,7 @@ import os
 
 import faiss
 import hydra
+from loguru import logger
 
 from mlops_project.model.embedding import Embedding
 from mlops_project.model.retrieve import Retrieve
@@ -17,6 +18,10 @@ def main(config):
     args = arg_parser.args
 
     # -------------------- PIPELINE EXECUTION -------------------------
+    # log information to hydra experiments
+    hydra_path = hydra.core.hydra_config.HydraConfig.get().runtime.output_dir
+    logger.add(os.path.join(hydra_path, "my_logger_hydra.log"))
+    logger.info(f"Configuration details: {config}")
 
     # Load metadata from JSON file using JsonHandler
     json_handler = JsonHandler(args.metadata_path)
@@ -25,7 +30,7 @@ def main(config):
     if update_index:
         embedder = Embedding(json_handler.dataset_str, args.model)
         faiss.write_index(embedder.index, f"{args.index_path}")
-        print(f"index database saved to {args.index_path}")
+        logger.info(f"index database saved to path {args.index_path}")
 
     # Create a retriever object which handles querying with given parameters,
     retriever = Retrieve(
@@ -33,13 +38,13 @@ def main(config):
     )
 
     # Outputs
-    print(f"[QUERY]: {args.query}\n")
+    logger.info(f"[QUERY]: {args.query}\n")
     for i, chunk in enumerate(retriever.results):
-        print(f"[RESULT {i + 1}]:\n{chunk}\n")
+        logger.info(f"[RESULT {i + 1}]:\n{chunk}\n")
 
     rag = RAGPipeline(model_path=args.model_path, n_gpu_layers=args.n_gpu_layers, context_length=args.context_length)
     response = rag.run(args.query, retriever.results)
-    print("\n[LLM RESPONSE]:\n", response)
+    logger.info(f"\n[LLM RESPONSE]:\n {response}")
 
 
 if __name__ == "__main__":
