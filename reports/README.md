@@ -79,9 +79,9 @@ will check the repositories and the code to verify your answers.
 * [x] Write unit tests related to the data part of your code (M16)
 * [x] Write unit tests related to model construction and or model training (M16)
 * [x] Calculate the code coverage (M16)
-* [ ] Get some continuous integration running on the GitHub repository (M17)
-* [ ] Add caching and multi-os/python/pytorch testing to your continuous integration (M17)
-* [ ] Add a linting step to your continuous integration (M17)
+* [x] Get some continuous integration running on the GitHub repository (M17)
+* [x] Add caching and multi-os/python/pytorch testing to your continuous integration (M17)
+* [x] Add a linting step to your continuous integration (M17)
 * [ ] Add pre-commit hooks to your version control setup (M18)
 * [ ] Add a continues workflow that triggers when data changes (M19)
 * [ ] Add a continues workflow that triggers when changes to the model registry is made (M19)
@@ -304,7 +304,7 @@ Total coverage is 92%. No, achieving 100% code coverage does not guarantee that 
 >
 > Answer:
 
---- question 9 fill here ---
+I used both feature branches and pull requests throughout the project. However, since I developed this project by myself ı used branches and pull requests less than I would use in my team projects. In theory, every new feature or modification is developed in its own branch. Each branch focused on a specific task: one branch set up a dedicated project environment to manage dependencies, completed the requirements.txt, enforced code formatting, configured version control, defined a configuration file for experiments, and created a GCP Bucket for data storage integrated with our data version control system. Another branch integrated log key metrics and artifacts. A separate branch was dedicated to writing unit tests for the data pipeline, model construction as well as measuring test coverage. Finally, an additional branch implemented a API service for model inference and added a workflow.
 
 ### Question 10
 
@@ -336,7 +336,14 @@ Total coverage is 92%. No, achieving 100% code coverage does not guarantee that 
 >
 > Answer:
 
---- question 11 fill here ---
+I organized my continuous integration (CI) setup into **two separate GitHub Actions workflows**, each responsible for a different aspect of code quality and reliability: one for **code formatting and linting**, and one for **unit testing**.
+
+The first workflow focuses on **code formatting and static analysis**. It is triggered on every push and pull request to the `main` branch. In this pipeline, I use **Ruff** as both a linter and formatter to ensure a consistent coding style and to catch common issues early in the development process. The workflow runs on `ubuntu-latest` and sets up **Python 3.11** using `actions/setup-python`. To improve execution speed, I enable **pip caching**, specifying the dependency path via `setup.py`. This reduces dependency installation time on subsequent runs and keeps the feedback loop fast. By running formatting and linting automatically, I ensure that only clean and well-formatted code is merged.
+
+The second workflow is responsible for **unit testing** and overall correctness. It is triggered on pushes and pull requests to both the `main` and `master` branches. This workflow uses a **matrix strategy** to test the project across multiple environments, specifically **two operating systems** (`ubuntu-latest` and `windows-latest`) and **two Python versions** (`3.12` and `3.13`). This setup helps verify cross-platform compatibility and prepares the project for newer Python releases. Dependencies are installed from `requirements.txt`, and the project itself is installed in editable mode. Tests are then executed using **pytest** with verbose output. Pip caching is also enabled here to speed up repeated runs.
+
+Overall, this CI setup ensures **code quality, correctness, and portability**, while providing fast and automated feedback throughout development. [Check one of gitHub action – Run tests workflow](https://github.com/mehmetyucelsaritas/MLOps_Project/blob/main/.github/workflows/test.yaml)
+
 
 ## Running code and tracking experiments
 
@@ -355,7 +362,18 @@ Total coverage is 92%. No, achieving 100% code coverage does not guarantee that 
 >
 > Answer:
 
---- question 12 fill here ---
+I configured experiments using **Hydra configuration files combined with argparse**. Default parameters such as file paths, model names, retrieval settings, and LLM parameters are defined in a YAML config and loaded via `@hydra.main`. These values are then exposed as command-line arguments through a custom `Parser` class, allowing parameters to be overridden at runtime without modifying the code. Hydra also automatically creates a separate output directory for each run and logs the full configuration, which improves reproducibility and experiment tracking.
+
+Use hydra config files and run:
+
+```
+python main.py
+```
+or override it:
+
+```
+python main.py --query "What is RAG?" --top_k 5 --model all-MiniLM-L6-v2 ...
+```
 
 ### Question 13
 
@@ -370,7 +388,12 @@ Total coverage is 92%. No, achieving 100% code coverage does not guarantee that 
 >
 > Answer:
 
---- question 13 fill here ---
+Reproducibility was ensured by combining **Hydra-based configuration management, structured logging, and a deterministic experiment setup**. All experiment parameters (such as file paths, model names, retrieval settings, and LLM parameters) are defined in YAML config files and loaded via `@hydra.main`. Whenever an experiment is executed, Hydra automatically creates a **unique output directory** and stores the fully resolved configuration used for that run, ensuring that no parameter information is lost.
+
+Additionally, the full configuration and all important outputs (query, retrieved chunks, and LLM responses) are logged using `loguru` into a run-specific log file inside Hydra’s output directory. This makes it possible to trace exactly how a result was produced.
+
+The `Parser` class connects config files with command-line arguments, allowing safe parameter overrides while preserving defaults. To reproduce an experiment, one only needs the saved Hydra output directory, the logged configuration, and the same code version, which guarantees an identical experimental setup.
+
 
 ### Question 14
 
@@ -402,7 +425,17 @@ Total coverage is 92%. No, achieving 100% code coverage does not guarantee that 
 >
 > Answer:
 
---- question 15 fill here ---
+
+Docker was used to ensure that experiments and the application runtime are **fully reproducible and portable** across different environments. I encapsulated all dependencies, model files, and runtime configurations into a single Docker image, eliminating issues related to Python versions, system libraries, or local setup differences.
+
+The provided Dockerfile builds on a lightweight `python:3.12` base image and installs all required system dependencies and Python packages, including `llama-cpp-python`. The image bundles the full project structure (source code, GUI, models, and configuration files) and automatically downloads the required LLM weights if they are not already present. This guarantees that the container can be run without any manual post-setup steps.
+
+The container exposes port `8501` and uses **Streamlit** as the entry point to launch the interactive GUI for the RAG-based LLM application.
+
+```
+docker build -f dockerfiles/firegpt.dockerfile -t firegpt:latest . ;docker run -p 8501:8501 firegpt:latest
+```
+
 
 ### Question 16
 
@@ -417,7 +450,10 @@ Total coverage is 92%. No, achieving 100% code coverage does not guarantee that 
 >
 > Answer:
 
---- question 16 fill here ---
+When running into bugs during experiments, I followed a systematic debugging approach. For logical or runtime errors, I primarily relied on the **VS Code debugger**, using breakpoints, step-through execution, and variable inspection to understand how data flows through the pipeline. This was especially helpful when diagnosing configuration-related issues, unexpected variable shapes, or incorrect parameter values passed through configuration files. For simpler or faster checks, I also used targeted logging and print statements to quickly isolate problematic parts of the code without interrupting the full experiment workflow.
+
+In addition to debugging, I performed basic performance profiling using Python’s built-in **cProfile** module. I ran profiling on the main execution path to identify potential bottlenecks, such as expensive preprocessing steps. The profiling results showed that most of the execution time was spent on Llama initialization in `llm_handler.py`.  While the code is not perfect, this process provided confidence that it is efficient, readable, and maintainable, with clear opportunities for further optimization if performance requirements increase.
+
 
 ## Working in the cloud
 
