@@ -82,10 +82,10 @@ will check the repositories and the code to verify your answers.
 * [x] Get some continuous integration running on the GitHub repository (M17)
 * [x] Add caching and multi-os/python/pytorch testing to your continuous integration (M17)
 * [x] Add a linting step to your continuous integration (M17)
-* [ ] Add pre-commit hooks to your version control setup (M18)
+* [x] Add pre-commit hooks to your version control setup (M18)
 * [ ] Add a continues workflow that triggers when data changes (M19)
 * [ ] Add a continues workflow that triggers when changes to the model registry is made (M19)
-* [ ] Create a data storage in GCP Bucket for your data and link this with your data version control setup (M21)
+* [x] Create a data storage in GCP Bucket for your data and link this with your data version control setup (M21)
 * [ ] Create a trigger workflow for automatically building your docker images (M21)
 * [ ] Get your model training in GCP using either the Engine or Vertex AI (M21)
 * [ ] Create a FastAPI application that can do inference using your model (M22)
@@ -93,7 +93,7 @@ will check the repositories and the code to verify your answers.
 * [ ] Write API tests for your application and setup continues integration for these (M24)
 * [ ] Load test your application (M24)
 * [ ] Create a more specialized ML-deployment API using either ONNX or BentoML, or both (M25)
-* [ ] Create a frontend for your API (M26)
+* [x] Create a frontend for your API (M26)
 
 ### Week 3
 
@@ -470,7 +470,14 @@ In addition to debugging, I performed basic performance profiling using Pythonâ€
 >
 > Answer:
 
---- question 17 fill here ---
+I utilized the following Google Cloud Platform services to build, deploy, and manage the infrastructure for this project:
+
+* **Compute Engine:** I used this to provision and manage the virtual machines that host the core application workloads.
+* **Cloud Run & Cloud Functions:** I deployed serverless containers using Cloud Run and executed lightweight, event-driven code snippets via Cloud Functions.
+* **Artifact Registry & Cloud Build:** I set up these services to automate the CI/CD pipeline, building container images and storing them securely.
+* **Cloud Storage:** I employed this for scalable object storage to save files and data blobs.
+* **Vertex AI:** I leveraged this service to support machine learning model operations.
+* **Security & Identity (IAM, Secret Manager, PAM):** I used **IAM** for permission management, and **Secret Manager** to store sensitive credentials.
 
 ### Question 18
 
