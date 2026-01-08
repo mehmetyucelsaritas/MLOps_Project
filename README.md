@@ -11,7 +11,7 @@ First, install Docker for your platform.
 Clone the repository:
 
 ```
-git clone git@github.com:mehmetyucelsaritas/FireGPT.git
+git clone git@github.com:mehmetyucelsaritas/MLOps_Project.git
 ```
 Even though the LLM models are automatically downloaded in the docker image, we recommend to download the models prior, as long recompilation caused by potential build issues can be avoided this way:
 
@@ -26,7 +26,7 @@ hf download microsoft/Phi-3-mini-4k-instruct-gguf Phi-3-mini-4k-instruct-q4.gguf
 Next, execute this line in a terminal (PowerShell) in the repositories root:
 
 ```
-docker build -t amifgptv1 . ; docker run -p 8501:8501 -it amifgptv1
+docker build -f dockerfiles/firegpt.dockerfile . -t firegpt:latest ; docker run -p 8501:8501 -it firegpt
 ```
 
 You can also use project scripts on terminal for processing data, building metadata, running firegpt and runnig firegpt gui respectively.
@@ -43,7 +43,7 @@ Otherwise go to http://127.0.0.1:8501
 
 For testing you can use following synthetic query (generated with ChatGPT, based on the Eaton Fire):
 
-### Querry
+### Query
 I’m facing a wildfire that started at coordinate (2.0,1.5) in the northwest quadrant of our operational map (grid origin at top-left (0,0), units in km). The fire has spread southeast, roughly following a ridge from (2.5,2.0) to (4.0,3.5), and it’s approaching the foothill community zone in the rectangular area between X =4.5–6.5km and Y=3.5–5.0km. There’s a natural drainage gulch along Y ≈1.0 where ember‑spotting is common, and a human-made access road/firebreak runs at X ≈3.0 from Y=0.5 to Y=5.0. Two evacuation shelters are located outside the fire area at approximately (8.5,6.5) and (9.0,7.0).
 
 We have available assets:
