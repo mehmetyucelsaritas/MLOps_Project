@@ -20,9 +20,9 @@ steps:
 #   args: [
 #     'run',
 #     'deploy',
-#     'simple-gcp-app',
+#     'firegpt-project',
 #     '--image',
-#     'europe-west1-docker.pkg.dev/dtumlops-482618/cloud-run-source-deploy/gcp_test_app',
+#     'europe-west1-docker.pkg.dev/dtumlops-482618/firegpt-container-registry/firegpt-image',
 #     '--region',
 #     'europe-west1',
 #     '--platform',
