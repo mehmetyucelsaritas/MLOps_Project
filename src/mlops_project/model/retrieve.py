@@ -1,6 +1,5 @@
 import faiss  # Store embedded ckunks as database
 import numpy as np
-from mlops_project.model.embedding import Embedding
 from sentence_transformers import SentenceTransformer  # Embed chunks to vector
 
 
