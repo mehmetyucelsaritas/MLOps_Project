@@ -4,7 +4,6 @@ import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 import streamlit as st
-
 from mlops_project.model.retrieve import Retrieve
 from mlops_project.rag_llm.rag_runner import RAGPipeline
 from mlops_project.utility import JsonHandler

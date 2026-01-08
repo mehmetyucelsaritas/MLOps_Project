@@ -10,36 +10,20 @@ class Parser:
         parameters = config.experiment
         # File paths
         self.parser.add_argument("--index_path", default=parameters["index_path"], help="Path to save index database.")
-        self.parser.add_argument(
-            "--tokenizer_path", default=parameters["tokenizer_path"], help="Path to save tokenizer models."
-        )
-        self.parser.add_argument(
-            "--metadata_path", default=parameters["metadata_path"], help="Path to save chunking database"
-        )
+        self.parser.add_argument("--tokenizer_path", default=parameters["tokenizer_path"], help="Path to save tokenizer models.")
+        self.parser.add_argument("--metadata_path", default=parameters["metadata_path"], help="Path to save chunking database")
         # Query
         self.parser.add_argument("--query", default=parameters["query"], help="The query string to search for.")
 
         # Parameters
-        self.parser.add_argument(
-            "--max_words", type=int, default=parameters["max_words"], help="Maximum number of words per chunk."
-        )
-        self.parser.add_argument(
-            "--min_words", type=int, default=parameters["min_words"], help="Minimum number of words per chunk."
-        )
-        self.parser.add_argument(
-            "--top_k", type=int, default=parameters["top_k"], help="Number of top similar chunks to return."
-        )
-        self.parser.add_argument(
-            "--model", type=str, default=parameters["model"], help="Name of the sentence transformer model."
-        )
+        self.parser.add_argument("--max_words", type=int, default=parameters["max_words"], help="Maximum number of words per chunk.")
+        self.parser.add_argument("--min_words", type=int, default=parameters["min_words"], help="Minimum number of words per chunk.")
+        self.parser.add_argument("--top_k", type=int, default=parameters["top_k"], help="Number of top similar chunks to return.")
+        self.parser.add_argument("--model", type=str, default=parameters["model"], help="Name of the sentence transformer model.")
 
         self.parser.add_argument("--model_path", type=str, default=parameters["model_path"], help="Path to GGUF model")
-        self.parser.add_argument(
-            "--n_gpu_layers", type=int, default=parameters["n_gpu_layers"], help="Number of GPU layers to offload"
-        )
-        self.parser.add_argument(
-            "--context_length", type=int, default=parameters["context_length"], help="Max context length for LLM"
-        )
+        self.parser.add_argument("--n_gpu_layers", type=int, default=parameters["n_gpu_layers"], help="Number of GPU layers to offload")
+        self.parser.add_argument("--context_length", type=int, default=parameters["context_length"], help="Max context length for LLM")
 
         self.args = self.parser.parse_args()
 

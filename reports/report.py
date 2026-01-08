@@ -38,10 +38,7 @@ class LengthConstraints(Constraints):
         """Check constraints on the length of the answer."""
         answer = answer.split()
         if not (self.min_length <= len(answer) <= self.max_length):
-            logger.warning(
-                f"Question {index} failed check. Expected number of words to be"
-                f" between {self.min_length} and {self.max_length} but got {len(answer)}"
-            )
+            logger.warning(f"Question {index} failed check. Expected number of words to be" f" between {self.min_length} and {self.max_length} but got {len(answer)}")
             return False
         return True
 
@@ -56,10 +53,7 @@ class ImageConstraints(Constraints):
         """Check constraints on the number of images in the answer."""
         links = re.findall(r"\!\[.*?\]\(.*?\)", answer)
         if not (self.min_images <= len(links) <= self.max_images):
-            logger.warning(
-                f"Question {index} failed check. Expected number of screenshots to be"
-                f" between {self.min_images} and {self.max_images} but got {len(links)}"
-            )
+            logger.warning(f"Question {index} failed check. Expected number of screenshots to be" f" between {self.min_images} and {self.max_images} but got {len(links)}")
             return False
         return True
 

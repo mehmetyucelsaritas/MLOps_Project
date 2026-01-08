@@ -2,9 +2,8 @@ import json
 from pathlib import Path
 from unittest.mock import MagicMock, mock_open, patch
 
-import pytest
-
 import mlops_project.data.build_metadata as build_metadata
+import pytest
 from mlops_project.data.data import extract_clean_text_from_pdf, fix_broken_words, process_pdf_files, save_text_to_file
 
 

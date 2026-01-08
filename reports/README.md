@@ -131,7 +131,7 @@ will check the repositories and the code to verify your answers.
 >
 > *sXXXXXX, sXXXXXX, sXXXXXX*
 >
-> Answer: 
+> Answer:
 
 s256629
 
@@ -205,25 +205,25 @@ New team members can clone the GitHub repository and run the following commands 
 
 This project was initialized using **Cookiecutter**, which provided a standardized and well-organized starting template.
 
-- **`config/`**  
+- **`config/`**
   Contains configuration files for the project, such as framework and environment settings.
 
-- **`data/`**  
+- **`data/`**
   Stores all project-related data in my case pdf files that is used in RAG pipeline.
 
-- **`models/`**  
+- **`models/`**
   Contains the imported model used in the project.
 
-- **`reports/`**  
+- **`reports/`**
   Contains exam report and assets related to the report.
 
-- **`outputs/`**  
+- **`outputs/`**
   Stores generated outputs such as performance metrics and analysis results.
 
-- **`src/`**  
+- **`src/`**
   Contains the project’s source code, including the model scripts located at `mlops_project/models/*`.
 
-- **`tests/`**  
+- **`tests/`**
   Includes all test cases and testing scripts, organized into subdirectories.
 
 Compared to the original Cookiecutter template:

@@ -1,8 +1,7 @@
 import faiss  # Store embedded ckunks as database
 import numpy as np
-from sentence_transformers import SentenceTransformer  # Embed chunks to vector
-
 from mlops_project.model.embedding import Embedding
+from sentence_transformers import SentenceTransformer  # Embed chunks to vector
 
 
 class Retrieve:
@@ -18,9 +17,7 @@ class Retrieve:
         results (List[str]): Top-k most relevant chunks for the query.
     """
 
-    def __init__(
-        self, query: str, chunks: list, json_chunks: list, top_k: int, model_name: str, index_path: str
-    ) -> list:
+    def __init__(self, query: str, chunks: list, json_chunks: list, top_k: int, model_name: str, index_path: str) -> list:
         self.top_k = top_k
         self.index = faiss.read_index(index_path)
         self.query = query

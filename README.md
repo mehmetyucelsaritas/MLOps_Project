@@ -38,17 +38,17 @@ python3 src/mlops_project/main.py
 python3 src/mlops_project/gui/gui.py
 ```
 
-In the terminal you should see the link to the web interface. 
+In the terminal you should see the link to the web interface.
 Otherwise go to http://127.0.0.1:8501
 
-For testing you can use following synthetic query (generated with ChatGPT, based on the Eaton Fire):  
+For testing you can use following synthetic query (generated with ChatGPT, based on the Eaton Fire):
 
 ### Querry
 I’m facing a wildfire that started at coordinate (2.0,1.5) in the northwest quadrant of our operational map (grid origin at top-left (0,0), units in km). The fire has spread southeast, roughly following a ridge from (2.5,2.0) to (4.0,3.5), and it’s approaching the foothill community zone in the rectangular area between X =4.5–6.5km and Y=3.5–5.0km. There’s a natural drainage gulch along Y ≈1.0 where ember‑spotting is common, and a human-made access road/firebreak runs at X ≈3.0 from Y=0.5 to Y=5.0. Two evacuation shelters are located outside the fire area at approximately (8.5,6.5) and (9.0,7.0).
 
 We have available assets:
-• 1 Thermal IR drones   
-• 1 Drone with water carrying ability   
+• 1 Thermal IR drones
+• 1 Drone with water carrying ability
 • 2 trucks and crew
 
 ### example result with mistral-7b:
@@ -72,4 +72,4 @@ We have available assets:
         The South Canyon Fire Behavior Report, Region: Colorado, United States
 
 ### Queries for evaluation
-You can find test_queries.json under ./testset for evaluation. For your reference you can also find our evaluation results for each query with different models in ./eval/eval_results. M7 stands for Mistral-7B; P3 stands for Phi3 Mini; and TL stands for TinyLlama.  
+You can find test_queries.json under ./testset for evaluation. For your reference you can also find our evaluation results for each query with different models in ./eval/eval_results. M7 stands for Mistral-7B; P3 stands for Phi3 Mini; and TL stands for TinyLlama.

@@ -48,11 +48,6 @@ class PromptBuilder:
         context_text = "\n\n".join(context_parts)
 
         # Final prompt
-        final_prompt = (
-            f"{system_instructions}\n"
-            f"--- Retrieved Documents ---\n\n{context_text}\n\n"
-            f"--- Wildfire Situation ---\n\n{user_input}\n\n"
-            f"--- Your Action Plan ---"
-        )
+        final_prompt = f"{system_instructions}\n" f"--- Retrieved Documents ---\n\n{context_text}\n\n" f"--- Wildfire Situation ---\n\n{user_input}\n\n" f"--- Your Action Plan ---"
 
         return final_prompt

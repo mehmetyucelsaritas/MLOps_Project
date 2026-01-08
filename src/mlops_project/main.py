@@ -34,9 +34,7 @@ def main(config):
         logger.info(f"index database saved to path {args.index_path}\n")
 
     # Create a retriever object which handles querying with given parameters,
-    retriever = Retrieve(
-        args.query, json_handler.dataset_str, json_handler.dataset_json, args.top_k, args.model, args.index_path
-    )
+    retriever = Retrieve(args.query, json_handler.dataset_str, json_handler.dataset_json, args.top_k, args.model, args.index_path)
 
     # Outputs
     logger.info(f"[QUERY]: {args.query}\n")

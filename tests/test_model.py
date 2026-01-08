@@ -4,7 +4,6 @@ from unittest.mock import MagicMock, patch
 import faiss
 import numpy as np
 import pytest
-
 from mlops_project.model.chunking import Chunking
 from mlops_project.model.embedding import Embedding
 from mlops_project.model.retrieve import Retrieve
