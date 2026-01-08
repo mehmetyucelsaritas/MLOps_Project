@@ -86,7 +86,7 @@ will check the repositories and the code to verify your answers.
 * [ ] Add a continues workflow that triggers when data changes (M19)
 * [ ] Add a continues workflow that triggers when changes to the model registry is made (M19)
 * [x] Create a data storage in GCP Bucket for your data and link this with your data version control setup (M21)
-* [ ] Create a trigger workflow for automatically building your docker images (M21)
+* [x] Create a trigger workflow for automatically building your docker images (M21)
 * [ ] Get your model training in GCP using either the Engine or Vertex AI (M21)
 * [ ] Create a FastAPI application that can do inference using your model (M22)
 * [ ] Deploy your model in GCP using either Functions or Run as the backend (M23)
@@ -501,7 +501,7 @@ I utilized the following Google Cloud Platform services to build, deploy, and ma
 >
 > Answer:
 
---- question 19 fill here ---
+![FireGPT Figure](figures/firegpt-bucket.png)
 
 ### Question 20
 
@@ -510,7 +510,7 @@ I utilized the following Google Cloud Platform services to build, deploy, and ma
 >
 > Answer:
 
---- question 20 fill here ---
+![FireGPT Registry](figures/firegpt-registry.png)
 
 ### Question 21
 
@@ -519,7 +519,7 @@ I utilized the following Google Cloud Platform services to build, deploy, and ma
 >
 > Answer:
 
---- question 21 fill here ---
+![FireGPT Cloud Build](figures/firegpt-cloud.png)
 
 ### Question 22
 
