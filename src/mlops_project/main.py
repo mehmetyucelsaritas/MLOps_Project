@@ -10,8 +10,7 @@ from mlops_project.rag_llm.rag_runner import RAGPipeline
 from mlops_project.utility import JsonHandler, Parser
 
 
-@hydra.main(version_base="1.3", config_path="../../configs", config_name="default_config.yaml")
-def main(config):
+def run_pipeline(config):
     # Flag to decide whether to update (rebuild) the FAISS index database
     update_index = False
     # Initialize argument parser and parse command line arguments
@@ -44,6 +43,11 @@ def main(config):
     rag = RAGPipeline(model_path=args.model_path, n_gpu_layers=args.n_gpu_layers, context_length=args.context_length)
     response = rag.run(args.query, retriever.results)
     logger.info(f"\n[LLM RESPONSE]:\n {response}")
+
+
+@hydra.main(version_base="1.3", config_path="../../configs", config_name="default_config.yaml")
+def main(config):
+    run_pipeline(config)
 
 
 if __name__ == "__main__":
