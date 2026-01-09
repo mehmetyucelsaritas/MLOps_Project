@@ -122,7 +122,7 @@ will check the repositories and the code to verify your answers.
 >
 > Answer:
 
---- question 1 fill here ---
+58
 
 ### Question 2
 > **Enter the study number for each member in the group**
@@ -551,7 +551,15 @@ I utilized the following Google Cloud Platform services to build, deploy, and ma
 >
 > Answer:
 
---- question 23 fill here ---
+Yes, I successfully developed an API for our RAG model using **FastAPI**.
+To ensure efficient resource usage and low-latency inference, we implemented a **lifespan context manager** using `@asynccontextmanager`. This design allows heavy resources—such as the **Hydra configuration**, **metadata loaders (JsonHandler)**, and the **LLM pipeline (RAGPipeline)**—to be initialized **only once at application startup**, rather than being reloaded for every incoming request.
+
+A notable implementation detail involved **argument parsing**. Since our custom configuration `Parser` could conflict with **Uvicorn’s command-line arguments**, we temporarily overrode `sys.argv` inside the lifespan function. This ensured that our project-specific configurations could be loaded safely without interfering with the ASGI server.
+
+The API exposes two main endpoints:
+- **`/health`**: Verifies that all pipeline resources have been successfully loaded.
+- **`/inference`**: Accepts a user query via a **Pydantic model**, retrieves relevant context using the `Retrieve` class, and passes it to the preloaded `rag_pipeline` to generate and return the final response.
+
 
 ### Question 24
 
@@ -582,7 +590,12 @@ I utilized the following Google Cloud Platform services to build, deploy, and ma
 >
 > Answer:
 
---- question 25 fill here ---
+Yes, I performed both **unit testing** and **load testing** for our FastAPI-based RAG API.
+
+For **unit testing**, I used FastAPI’s built-in testing. Specifically, we created tests using `TestClient` to validate the correctness of individual endpoints. For example, the `/health` endpoint was tested to ensure it returned a `200 OK` status and the expected JSON response (`{"status": "ok"}`). This confirmed that the application started correctly and that all critical resources were properly initialized during the lifespan phase.
+
+For **load testing**, I used **Locust** to simulate concurrent users interacting with the API. A custom `HttpUser` class was defined to repeatedly send requests to the `/health` endpoint with a realistic wait time between requests. This allowed me to observe response times and stability under increasing load. The results showed that the service handled multiple concurrent health-check requests reliably, with stable response times and no crashes under moderate user loads, demonstrating that the API infrastructure is robust for basic monitoring checks.
+
 
 ### Question 26
 
@@ -616,7 +629,14 @@ I utilized the following Google Cloud Platform services to build, deploy, and ma
 >
 > Answer:
 
---- question 27 fill here ---
+**Cloud Usage and Cost Analysis**: Based on the gcp billing report, a total of **€8.94** was spent during the development of this project. The most expensive service by a significant margin was **Google Compute Engine**, with a cost of **€8.42**. This service alone accounted for nearly the entire project budget, which is most likely due to the continuous runtime costs of virtual machine instances used during development and deployment.
+
+The second highest cost category was **Networking**, with a total expense of **€0.46**, which is significantly lower compared to Compute Engine. Other services contributed only negligibly to the overall cost.
+
+**Experience of Working in the Cloud**: My overall experience of working in the cloud was mixed but ultimately positive. At the beginning, the process was challenging due to the steep learning curve. Setting up the cloud environment, managing permissions and roles, and understanding the billing structure in order to avoid unnecessary costs required considerable effort and attention.
+
+However, once the initial setup phase was completed, the advantages of cloud computing became very clear. The cloud ecosystem provides a wide range of well-integrated services that simplify development workflows and greatly improve productivity. Despite the high barrier to entry, I think the flexibility, scalability, and efficiency offered by cloud infrastructure make it an invaluable tool for modern software and machine learning development.
+
 
 ### Question 28
 
@@ -632,7 +652,9 @@ I utilized the following Google Cloud Platform services to build, deploy, and ma
 >
 > Answer:
 
---- question 28 fill here ---
+Yes, I implemented additional components that go beyond the core requirements of the project. Most notably, I developed a **graphical user interface (GUI)** for the system using **Streamlit**. This frontend was built on top of the API to provide a more intuitive and interactive way for users to interact with the RAG pipeline. Through the Streamlit interface, users can easily submit queries, adjust relevant parameters, and observe model outputs without needing to interact with the backend directly. This significantly improves usability and makes the system easier to demonstrate and evaluate.
+
+In addition, I extended the model pipeline by integrating **different model components**, such as a tokenizer and an embedding model, to process the data immediately before it enters the RAG pipeline. This design allows the system to incorporate preprocessed data in a modular and flexible way, making it easier to experiment with different embedding strategies and model configurations. These additions improved both the extensibility and the practical usability of the overall system.
 
 ### Question 29
 
@@ -663,7 +685,11 @@ I utilized the following Google Cloud Platform services to build, deploy, and ma
 >
 > Answer:
 
---- question 30 fill here ---
+The project involved several significant challenges, both in terms of system integration and infrastructure management. One of the earliest and most time-consuming difficulties was making **Hydra compatible with FastAPI**. Hydra is designed to take control of application entry points and configuration management, which conflicted with FastAPI’s lifecycle and request-based execution model. This resulted in multiple runtime errors related to configuration paths, missing keys, and repeated initialization. I spent a considerable amount of time debugging these issues, restructuring the codebase, and separating configuration logic from request handling. Eventually, I resolved this by introducing clearer configuration boundaries and explicitly controlling when and how Hydra was initialized within the application.
+
+Another major challenge was **initializing and configuring cloud services**. Setting up the cloud environment required careful handling of permissions, service accounts, networking rules, and billing constraints. This process was time-consuming. I overcame this challenge through incremental setup, extensive use of logging, and frequent validation of each service component before moving on to the next step.
+
+The most challenging part of the project, however, was **building Docker images and deploying them to the cloud**, particularly because the project relies on large language models. Even the smallest LLMs used in the project were in the range of 2–4 GB, which significantly complicated containerization. Docker build times were long, image sizes were large, and deployments frequently failed due to memory limits, timeout issues, or storage constraints. To overcome this, I experimented with different base images, optimized Docker layers, removed unnecessary dependencies, and carefully managed model loading strategies. I also iteratively tested builds locally before pushing them to the cloud to reduce failure cycles.
 
 ### Question 31
 
@@ -681,14 +707,10 @@ I utilized the following Google Cloud Platform services to build, deploy, and ma
 > *We have used ChatGPT to help debug our code. Additionally, we used GitHub Copilot to help write some of our code.*
 > Answer:
 
-fewafewubaofewnafioewnifowf ewafw afew afewafewafionewoanf waf ewonfieownaf fewnaiof newio fweanøf wea fewa
- fweafewa fewiagonwa ognwra'g
- wa
- gwreapig ipweroang w rag
- wa grwa
-  g
-  ew
-  gwea g
-  ew ag ioreabnguorwa bg̈́aw
-   wa
-   gew4igioera giroeahgi0wra gwa
+This project was primarily carried out as an individual effort by student s256629. I was the only registered group member working on the project and was responsible for all core development and MLOps practices throughout the course. Due to the scope and complexity of the project, I started working slightly earlier than the official course start.
+
+I initialized the repository and defined the overall project structure. I was responsible for configuration management, data processing pipelines, model development, experiment tracking, and versioning. I also implemented the full MLOps workflow, including building APIs, integrating system components, and deploying the model to the cloud. Debugging, testing, and end-to-end system integration were entirely handled by me.
+
+In addition to my individual work, I received limited technical support from colleagues at the Technical University of Munich who were not registered for this course. Some colleagues assisted with implementing Python files in the `rag_llm` folder under `src/mlops_project/`, and others helped with building the Streamlit-based user interface. These contributions were limited to implementation support, while overall system design, integration, and final responsibility remained with me.
+
+Generative AI tools were used in a supportive manner during the project. ChatGPT was used to refine and improve the writing quality of the final report and to assist in developing and validating API test cases. All generated suggestions were reviewed and adapted manually to ensure correctness and full understanding. No generative AI tools were used to automatically generate core project logic without my verification.
