@@ -1,8 +1,52 @@
 
-# FireGPT
+# FireGPT: Intelligent Wildfire Response Assistant
+
+## 1. Overall Goal of the Project
+
+The primary goal of this project is to design and implement **FireGPT**, an intelligent, locally deployable decision support system intended to assist frontline wildfire responders in high-stakes emergency scenarios. Motivated by the increasing frequency and severity of wildfires due to climate change and human activities, the system addresses the urgent need for data-driven management in dynamic fire conditions.
+
+FireGPT integrates **Retrieval-Augmented Generation (RAG)** with a **Large Language Model (LLM)** to provide real-time, context-aware action plans. By prioritizing operational robustness and low-latency performance, FireGPT aims to bridge advanced AI techniques with practical field constraints to improve safety and response effectiveness.
+
+## 2. Data Strategy (Initial & Pre-processing)
+
+The system runs on a high-quality knowledge base constructed from curated documents sourced from global firefighting and emergency response agencies.
+
+### Initial Data Sources
+
+The initial corpus consists of approximately **20 documents**, selected for their breadth and relevance to wildfire management. The data covers various geographic regions and operational doctrines, including:
+
+- **United States:** The *Aerial Firefighting Use and Effectiveness (AFUE) Final Report* and case studies on fire behavior such as the South Canyon Fire.
+- **Germany:** The *Waldbrandbericht 2022* and technical recommendations for aerial firefighting.
+- **Australia:** The *National Aerial Firefighting Strategy 2021–26* and technical operating procedures from New South Wales.
+- **Other Regions:** Strategic frameworks and guidance from Sweden, Portugal, and Canada.
+
+### Data Pre-processing
+
+To prepare this data for the RAG pipeline, the following steps are taken:
+
+- **Image-to-Text Transcription:** Since many wildfire documents contain critical maps and diagrams, a custom Python script uses the Google Gemini API to transcribe these images into semantic text descriptions, which are inserted back into the documents.
+- **Chunking:** Text is segmented into semantically coherent units of approximately 100 to 300 words to balance granularity with computational efficiency.
+- **Metadata Annotation:** Chunks are annotated with source, region, and language to enable filtering during retrieval.
+
+## 3. Models and Technical Architecture
+
+The system is designed for local execution on resource-constrained hardware using models in the **GGUF format** via `llama.cpp`.
+
+### Language Models (LLMs)
+
+The project utilizes a modular orchestration layer that supports dynamic switching between the following models:
+
+- **Mistral-7B Instruct:** Used for generating the most detailed and structured responses, capable of precise GPS references and multi-location planning.
+- **Phi-3 Mini:** Intended as the primary balanced option; it offers strong reasoning capabilities and faster inference speeds compared to Mistral-7B, making it suitable for lightweight deployment.
+- **TinyLlama:** Included as a fallback model for highly constrained environments due to its low resource footprint and fast response time.
+
+### Embedding and Retrieval
+
+- **Embedding Model:** **all-MiniLM-L6-v2** (Sentence Transformers) is used to encode text chunks into high-dimensional semantic vectors.
+- **Vector Store:** **FAISS** (Facebook AI Similarity Search) is employed to store vectors and perform efficient approximate nearest neighbor searches.
 
 
-## Getting started
+# Getting started
 
 We provide a dockerfile to build the app and get its dependencies with less headache.
 
