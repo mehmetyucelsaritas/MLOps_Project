@@ -362,9 +362,9 @@ Overall, this CI setup ensures **code quality, correctness, and portability**, w
 >
 > Answer:
 
-I configured experiments using **Hydra configuration files combined with argparse**. Default parameters such as file paths, model names, retrieval settings, and LLM parameters are defined in a YAML config and loaded via `@hydra.main`. These values are then exposed as command-line arguments through a custom `Parser` class, allowing parameters to be overridden at runtime without modifying the code. Hydra also automatically creates a separate output directory for each run and logs the full configuration, which improves reproducibility and experiment tracking.
+I configured experiments using **Hydra configuration files combined with argparse**. Default parameters file paths, model names, retrieval settings, and LLM parameters are defined in a YAML config and loaded via `@hydra.main`. These values are then exposed as command-line arguments through a custom `Parser` class,allowing parameters to be overridden at runtime without modifying the code. Hydra also automatically creates a separate output directory for each run and logs the full configuration, which improves reproducibility and experiment tracking.
 
-Use hydra config files and run:
+Use hydra config files:
 
 ```
 python main.py
@@ -629,11 +629,11 @@ For **load testing**, I used **Locust** to simulate concurrent users interacting
 >
 > Answer:
 
-**Cloud Usage and Cost Analysis**: Based on the gcp billing report, a total of **€8.94** was spent during the development of this project. The most expensive service by a significant margin was **Google Compute Engine**, with a cost of **€8.42**. This service alone accounted for nearly the entire project budget, which is most likely due to the continuous runtime costs of virtual machine instances used during development and deployment.
+**Cloud Usage and Cost Analysis**: A total of **€8.94** was spent during the development of this project. The most expensive service by a significant margin was **Google Compute Engine**, with a cost of **€8.42**  which is most likely due to the continuous runtime costs of virtual machine instances used during development and deployment.
 
-The second highest cost category was **Networking**, with a total expense of **€0.46**, which is significantly lower compared to Compute Engine. Other services contributed only negligibly to the overall cost.
+The second highest cost category was **Networking**, with a total expense of **€0.46**, which is significantly lower compared to Compute Engine. Other services contributed only negligibly cost.
 
-**Experience of Working in the Cloud**: My overall experience of working in the cloud was mixed but ultimately positive. At the beginning, the process was challenging due to the steep learning curve. Setting up the cloud environment, managing permissions and roles, and understanding the billing structure in order to avoid unnecessary costs required considerable effort and attention.
+**Experience of Working in the Cloud**: My overall experience of working in the cloud was ultimately positive. At the beginning, the process was challenging due to the steep learning curve. Setting up the cloud environment, managing permissions and roles, and understanding the billing structure in order to avoid unnecessary costs required considerable effort and attention.
 
 However, once the initial setup phase was completed, the advantages of cloud computing became very clear. The cloud ecosystem provides a wide range of well-integrated services that simplify development workflows and greatly improve productivity. Despite the high barrier to entry, I think the flexibility, scalability, and efficiency offered by cloud infrastructure make it an invaluable tool for modern software and machine learning development.
 
