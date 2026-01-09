@@ -27,4 +27,4 @@ RUN [ -f ./models/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf ] || hf download TheBloke
 # RUN [ -f ./models/Phi-3-mini-4k-instruct-q4.gguf ] || hf download microsoft/Phi-3-mini-4k-instruct-gguf Phi-3-mini-4k-instruct-q4.gguf --local-dir ./models
 
 EXPOSE 8501
-ENTRYPOINT ["streamlit", "run", "src/mlops_project/gui/gui.py"]
+ENTRYPOINT ["streamlit", "run", "src/mlops_project/gui/gui.py", "--server.port=${PORT:-8501}", "--server.address=0.0.0.0", "--server.headless=true"]
