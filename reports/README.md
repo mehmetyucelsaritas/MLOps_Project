@@ -618,7 +618,16 @@ For **load testing**, I used **Locust** to simulate concurrent users interacting
 >
 > Answer:
 
---- question 26 fill here ---
+I successfully implemented monitoring for my deployed model using the built-in tools provided by Google Cloud Platform (GCP).
+
+GCP's Cloud Run service automatically collects a standard set of metrics "out-of-the-box" without requiring complex configuration. By utilizing the **Metrics dashboard**, I am actively tracking key performance indicators such as:
+* **Request count**
+* **Request latencies**
+* **Container instance count**
+
+This setup gives me immediate visibility into traffic patterns and system load without needing to manage separate containers for metrics collection.
+
+To ensure the longevity of the application, I also implemented a **Service Level Objective (SLO)**. This allows me to set a specific target for reliability.
 
 ## Overall discussion of project
 
