@@ -70,7 +70,7 @@ hf download microsoft/Phi-3-mini-4k-instruct-gguf Phi-3-mini-4k-instruct-q4.gguf
 Next, execute this line in a terminal (PowerShell) in the repositories root:
 
 ```
-docker build -f dockerfiles/firegpt.dockerfile . -t firegpt:latest ; docker run -p 8501:8501 -it firegpt
+docker build -f dockerfiles/firegpt.dockerfile . -t firegpt:latest ; docker run -p 8080:8080 -it firegpt
 ```
 
 You can also use project scripts on terminal for processing data, building metadata, running firegpt and runnig firegpt gui respectively.

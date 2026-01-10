@@ -186,7 +186,7 @@ To guarantee a fully reproducible development environment, the project was conta
 
 New team members can clone the GitHub repository and run the following commands to build and start the Docker container:
 
-```docker build -f dockerfiles/firegpt.dockerfile . -t firegpt:latest ; docker run -p 8501:8501 -it firegpt```
+```docker build -f dockerfiles/firegpt.dockerfile . -t firegpt:latest ; docker run -p 8080:8080 -it firegpt```
 
 
 ### Question 5
