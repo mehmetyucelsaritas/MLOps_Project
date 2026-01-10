@@ -62,7 +62,7 @@ will check the repositories and the code to verify your answers.
     are using (M2+M6)
 * [x] Remember to comply with good coding practices (`pep8`) while doing the project (M7)
 * [x] Do a bit of code typing and remember to document essential parts of your code (M7)
-* [ ] Setup version control for your data or part of your data (M8)
+* [x] Setup version control for your data or part of your data (M8)
 * [x] Add command line interfaces and project commands to your code where it makes sense (M9)
 * [x] Construct one or multiple docker files for your code (M10)
 * [x] Build the docker files locally and make sure they work as intended (M10)
@@ -110,10 +110,10 @@ will check the repositories and the code to verify your answers.
 
 * [ ] Write some documentation for your application (M32)
 * [ ] Publish the documentation to GitHub Pages (M32)
-* [ ] Revisit your initial project description. Did the project turn out as you wanted?
-* [ ] Create an architectural diagram over your MLOps pipeline
-* [ ] Make sure all group members have an understanding about all parts of the project
-* [ ] Uploaded all your code to GitHub
+* [x] Revisit your initial project description. Did the project turn out as you wanted?
+* [x] Create an architectural diagram over your MLOps pipeline
+* [x] Make sure all group members have an understanding about all parts of the project
+* [x] Uploaded all your code to GitHub
 
 ## Group information
 
@@ -319,7 +319,9 @@ I used both feature branches and pull requests throughout the project. However, 
 >
 > Answer:
 
---- question 10 fill here ---
+I initialized **DVC** in my repository to prepare the project. During development, however, the datasets I used were relatively small and well below GitHub’s file size limits, so I kept the data directly inside the GitHub repository instead of storing it in a separate DVC remote. This approach simplified development and collaboration while avoiding unnecessary infrastructure overhead in the early stages.
+
+Even though I did not fully rely on DVC for managing large datasets, having DVC initialized was still beneficial. It allowed me to design the pipeline with **data versioning and experiment reproducibility** in mind and ensured that the project could easily scale if the data size increased. In a more realistic production or research scenario, DVC would be particularly useful when datasets are large, frequently updated, or shared across multiple experiments. Using DVC in such cases helps track which exact data version was used for each model, reproduce results reliably, and prevent inconsistencies between data, code, and model outputs.
 
 ### Question 11
 
@@ -492,7 +494,9 @@ I utilized the following Google Cloud Platform services to build, deploy, and ma
 >
 > Answer:
 
---- question 18 fill here ---
+In my project, I did not directly use **Google Compute Engine** virtual machines. Instead, I relied on **Google Cloud Run** to deploy and manage the application. Cloud Run allowed me to run my application as containerized Docker images without the need to configure, or maintain virtual machines manually. This approach significantly simplified infrastructure management and reduced operational overhead.
+
+If direct VM usage were required (e.g., for custom networking, GPU workloads, or long-running background jobs), Compute Engine instances would have been appropriate. However, for my use case, Cloud Run provided a more efficient, serverless alternative while still leveraging GCP’s underlying compute backbone.
 
 ### Question 19
 
@@ -534,7 +538,11 @@ I utilized the following Google Cloud Platform services to build, deploy, and ma
 >
 > Answer:
 
---- question 22 fill here ---
+I did not train the main model of my project in the cloud using either **Google Compute Engine** or **Vertex AI**. While I did train basic and small-scale models in cloud-based exercises, training even relatively small large language models (LLMs) requires substantial computational resources, particularly access to high-performance GPUs. Unfortunately, my cloud account did not provide access to GPU-enabled instances, and CPU-only training would have required an impractically long time.
+
+Because of these limitations, I focused on designing and validating the overall pipeline, model integration, and deployment strategy rather than performing full-scale model training in the cloud. This allowed me to concentrate on reproducibility, containerization, and serving the model efficiently.
+
+If GPU access had been available, Vertex AI would have been a suitable choice due to its managed training jobs and scalability. Due to the hardware constraints and time considerations, training the full model locally or using pre-trained models was the most practical and efficient approach for this project.
 
 ## Deployment
 
