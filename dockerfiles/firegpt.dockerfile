@@ -28,4 +28,4 @@ RUN [ -f ./models/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf ] || hf download TheBloke
 # RUN [ -f ./models/mistral-7b-instruct-v0.2.Q4_K_M.gguf ] || hf download TheBloke/Mistral-7B-Instruct-v0.2-GGUF  mistral-7b-instruct-v0.2.Q4_K_M.gguf --local-dir ./models
 # RUN [ -f ./models/Phi-3-mini-4k-instruct-q4.gguf ] || hf download microsoft/Phi-3-mini-4k-instruct-gguf Phi-3-mini-4k-instruct-q4.gguf --local-dir ./models
 
-ENTRYPOINT ["streamlit", "run", "src/mlops_project/gui/gui.py", "--server.port=$PORT", "--server.address=0.0.0.0", "--server.headless=true"]
+ENTRYPOINT ["sh", "-c", "exec streamlit run src/mlops_project/gui/gui.py --server.port=$PORT --server.address=0.0.0.0 --server.headless=true"]
