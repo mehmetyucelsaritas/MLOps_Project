@@ -186,7 +186,7 @@ To guarantee a fully reproducible development environment, the project was conta
 
 New team members can clone the GitHub repository and run the following commands to build and start the Docker container:
 
-``` docker build -t amifgptv1 . docker run -p 8501:8501 -it amifgptv1 ```
+```docker build -f dockerfiles/firegpt.dockerfile . -t firegpt:latest ; docker run -p 8501:8501 -it firegpt```
 
 
 ### Question 5
@@ -272,7 +272,7 @@ In larger projects, these practices are crucial for **scalability** and **collab
 >
 > Answer:
 
-In total, I implemented **around 18 tests** covering unit, integration behavior. The tests primarily focus on the most critical parts of the application, including text preprocessing and chunking (removal of invisible characters, sentence splitting, and metadata generation), embedding creation and FAISS index construction, and similarity-based retrieval. In addition, data ingestion utilities such as PDF text extraction, broken-word fixing, file saving, and metadata building are tested. External dependencies (NLTK, SentenceTransformer, FAISS, and pdfplumber) are mocked to ensure fast, deterministic, and isolated tests.
+In total, I implemented **around 16 tests** covering unit, integration behavior and load testing. The tests primarily focus on the most critical parts of the application, including text preprocessing and chunking (removal of invisible characters, sentence splitting, and metadata generation), embedding creation and FAISS index construction, and similarity-based retrieval. In addition, data ingestion utilities such as PDF text extraction, broken-word fixing, file saving, and metadata building are tested. External dependencies (NLTK, SentenceTransformer, FAISS, and pdfplumber) are mocked to ensure fast, deterministic, and isolated tests.
 
 
 ### Question 8
@@ -671,7 +671,30 @@ In addition, I extended the model pipeline by integrating **different model comp
 >
 > Answer:
 
---- question 29 fill here ---
+![FireGPT Cloud Build](figures/firegpt-architecture.png)
+
+The architecture defines a streamlined process that moves code from local development to a production-ready cloud environment:
+
+**1. Local Development (Local)**
+The starting point is the local machine, where the project is structured using a **Cookiecutter MLOps Template**. I manage Python dependencies via **Pip & Conda** and handle configuration management using **Hydra**.
+* **Experimentation:** **WandB** (Weights & Biases) is integrated for tracking experiments and logging model metrics.
+* **Interface:** A **Streamlit** frontend allows for local interaction with the model.
+* **Quality Control:** **Pre-commit** hooks are used to catch issues before version control, and a local **Docker** container ensures the application runs consistently across environments.
+
+**2. Version Control & Triggers**
+**Git** serves as the central version control system. Pushing a commit to the repository acts as the primary trigger that initiates two parallel automated workflows: Continuous Integration and Continuous Deployment.
+
+**3. Continuous Integration (CI)**
+Upon a push, **GitHub Actions** triggers a suite of automated checks to ensure code integrity:
+* **Linting:** **Ruff** checks the code for PEP8 compliance and formatting errors.
+* **Testing:** **Pytest** executes unit and integration tests.
+* **Load Testing:** **Locust** simulates user load to verify performance stability.
+
+**4. Continuous Deployment (CD)**
+Simultaneously, the commit triggers a **Cloud Build** process within the Cloud environment (GCP).
+* **Build & Store:** The application is containerized and pushed to the **Artifact Registry**.
+* **Deploy:** **Cloud Run** consumes the container to deploy the application, exposing a **FastAPI** endpoint.
+* **Support Services:** The system utilizes **Cloud Storage** for managing artifacts and models, while **Cloud Monitoring** handles logging and error tracking for the deployed service.
 
 ### Question 30
 
