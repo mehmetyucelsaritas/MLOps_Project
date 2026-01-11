@@ -89,7 +89,7 @@ will check the repositories and the code to verify your answers.
 * [x] Create a trigger workflow for automatically building your docker images (M21)
 * [ ] Get your model training in GCP using either the Engine or Vertex AI (M21)
 * [x] Create a FastAPI application that can do inference using your model (M22)
-* [ ] Deploy your model in GCP using either Functions or Run as the backend (M23)
+* [x] Deploy your model in GCP using either Functions or Run as the backend (M23)
 * [x] Write API tests for your application and setup continues integration for these (M24)
 * [x] Load test your application (M24)
 * [ ] Create a more specialized ML-deployment API using either ONNX or BentoML, or both (M25)
@@ -432,10 +432,10 @@ Docker was used to ensure that experiments and the application runtime are **ful
 
 The provided Dockerfile builds on a lightweight `python:3.12` base image and installs all required system dependencies and Python packages, including `llama-cpp-python`. The image bundles the full project structure (source code, GUI, models, and configuration files) and automatically downloads the required LLM weights if they are not already present. This guarantees that the container can be run without any manual post-setup steps.
 
-The container exposes port `8501` and uses **Streamlit** as the entry point to launch the interactive GUI for the RAG-based LLM application.
+The container exposes port `8080` and uses **Streamlit** as the entry point to launch the interactive GUI for the RAG-based LLM application.
 
 ```
-docker build -f dockerfiles/firegpt.dockerfile -t firegpt:latest . ;docker run -p 8501:8501 firegpt:latest
+docker build -f dockerfiles/firegpt.dockerfile . -t firegpt:latest ; docker run -p 8080:8080 -e PORT=8080 -it firegpt
 ```
 
 
@@ -646,9 +646,9 @@ To ensure the longevity of the application, I also implemented a **Service Level
 >
 > Answer:
 
-**Cloud Usage and Cost Analysis**: A total of **€8.94** was spent during the development of this project. The most expensive service by a significant margin was **Google Compute Engine**, with a cost of **€8.42**  which is most likely due to the continuous runtime costs of virtual machine instances used during development and deployment.
+**Cloud Usage and Cost Analysis**: A total of **€15.04** was spent during the development of this project. The most expensive service by a significant margin was **Google Compute Engine**, with a cost of **€10.29**  and **Google Compute Run** with **€3.48** which is most likely due to the continuous runtime costs of virtual machine instances used during development and deployment.
 
-The second highest cost category was **Networking**, with a total expense of **€0.46**, which is significantly lower compared to Compute Engine. Other services contributed only negligibly cost.
+The second highest cost category was **Networking**, with a total expense of **€0.60**, which is significantly lower compared to Compute Engine. Other services contributed only negligibly cost.
 
 **Experience of Working in the Cloud**: My overall experience of working in the cloud was ultimately positive. At the beginning, the process was challenging due to the steep learning curve. Setting up the cloud environment, managing permissions and roles, and understanding the billing structure in order to avoid unnecessary costs required considerable effort and attention.
 
