@@ -19,7 +19,7 @@ st.title("FireGPT - Wildfire Emergency Assistant")
 
 # Sidebar Model Selector
 selected_model = st.sidebar.selectbox("Select LLM Model", list(MODEL_PATHS.keys()), index=1)
-n_gpu_layers = st.sidebar.slider("GPU Layers", 0, 50, -1)
+n_gpu_layers = st.sidebar.slider("GPU Layers", -1, 50, -1)
 context_length = st.sidebar.slider("Context Length", 512, 4096, 4096, step=512)
 
 # File uploader + map settings
