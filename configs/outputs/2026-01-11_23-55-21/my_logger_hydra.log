@@ -1,0 +1,50 @@
+2026-01-11 23:55:21.924 | INFO     | __main__:run_pipeline:24 - Configuration details: {'experiment': {'index_path': 'models/index.faiss', 'tokenizer_path': 'models/nltk_data/tokenizers', 'metadata_path': 'data/processed/chunking_metadata.json', 'query': 'I’m facing a wildfire that started at coordinate (2.0,1.5) in the northwest quadrant of our operational map (grid origin at top-left (0,0), units in km). The fire has spread southeast, roughly following a ridge from (2.5,2.0) to (4.0,3.5), and it’s approaching the foothill community zone in the rectangular area between X =4.5–6.5km and Y=3.5–5.0km. There’s a natural drainage gulch along Y ≈1.0 where ember‑spotting is common, and a human-made access road/firebreak runs at X ≈3.0 from Y=0.5 to Y=5.0. Two evacuation shelters are located outside the fire area at approximately (8.5,6.5) and (9.0,7.0). \n We have available assets: • 1 Thermal IR drones • 1 Drone with water carrying ability • 2 trucks and crew', 'max_words': 250, 'min_words': 200, 'top_k': 1, 'model': 'models/all-MiniLM-L6-v2', 'model_path': 'models/Phi-3-mini-4k-instruct-q4.gguf', 'n_gpu_layers': -1, 'context_length': 2048}}
+2026-01-11 23:55:22.729 | INFO     | __main__:run_pipeline:39 - [QUERY]: I’m facing a wildfire that started at coordinate (2.0,1.5) in the northwest quadrant of our operational map (grid origin at top-left (0,0), units in km). The fire has spread southeast, roughly following a ridge from (2.5,2.0) to (4.0,3.5), and it’s approaching the foothill community zone in the rectangular area between X =4.5–6.5km and Y=3.5–5.0km. There’s a natural drainage gulch along Y ≈1.0 where ember‑spotting is common, and a human-made access road/firebreak runs at X ≈3.0 from Y=0.5 to Y=5.0. Two evacuation shelters are located outside the fire area at approximately (8.5,6.5) and (9.0,7.0).
+ We have available assets: • 1 Thermal IR drones • 1 Drone with water carrying ability • 2 trucks and crew
+
+2026-01-11 23:55:22.729 | INFO     | __main__:run_pipeline:41 - [RESULT 1]:
+{'text': 'Fish and Wildlife Service, Klamath Basin National Wildlife Refuge Complex, Tulelake, CA, 2002. First Place, Wildland Fire. Trees silhouetted against the advancing flames onthe Hayman Fire between Denver and Colorado Springs, CO. Photo: Steven Smith, Colorado Springs Fire Department, Colorado Springs, CO, 2002. Second Place, Prescribed Fire. A member ofthe Bandelier Fire Crew gathers limbs to toss on burning piles, part ofa thinning project to create a fuel break inthe Jemez Mountains, NM. Photo: Kristen Honig, National Park Service, Los Alamos, NM, 2003. Second Place, Wildland/Urban Interface. Standing inthe path ofthe Rodeo–Chediski Fire onthe Apache–Sitgreaves National Forest, AZ, this mobile home park inthe community of Heber-Overguard was almost totally consumed bythe intense firestorm. Photo: Thomas Iraci, USDA Forest Service, Pacific Northwest Region, Portland, OR, 2002.Third Place, Wildland/Urban Interface. Grazing llamas watch calmly asa wildfire draws dangerously close to homes onthe Deer Creek Ranch near Selma, OR. Photo: Thomas Iraci, USDA Forest Service, Pacific Northwest Region, Portland, OR, 2002. First Place, Aerial Resources. Airtanker 22 drops a load of retardant onthe Missionary Ridge Fire, San Juan–Rio Grande National Forest, CO, 2002. Photo: Ben Croft, USDA Forest Service, Missoula Technology and Development Center, Missoula, MT, 2002. Second Place, Aerial Resources. A member ofthe Mesa Verde National Park helitack crew guides helicopter 910in fora safe landing atan unimproved helispot during the East Canyon #2 Fire in southwestern Colorado. Photo: Bill Pool, National Park Service, Phoenix, AZ, 2002. Third Place, Wildland Fire. The Eightmile Lookout is peacefully out- lined against distant smoke from the Missionary Ridge Fire, San Juan–Rio Grande National Forest, CO. Photo: Mark Roper, USDA Forest Service, San Juan–Rio Grande National Forest, Pagosa Ranger District, Pagosa Springs, CO, 2002. Third Place, Prescribed Fire.', 'source': 'FireManagementtoday Volume 63 • No. 4 • Fall 2003.pdf', 'topic': 'Wildland fire behavior case studies, data collection, and reporting standards', 'region': 'International/United States/Australia/New Zealand', 'source_name': 'Fire Management Today Volume 63, No. 4, Fall 2003', 'language': 'English', 'summary': 'This Fall 2003 issue of Fire Management Today is the second installment on wildland fire behavior case studies and analyses, providing examples, methods, reporting standards, and practical advice [48, 49]. It highlights that case studies from one country can be applied to another if fuel type characteristics are relevant, by interpreting burning conditions through their respective fire danger rating systems [49, 50]. The publication notes contributions from U.S. organizations like the National Fire Protection Association (NFPA) [51] and Australasian fire researchers [52, 53]. It also provides a suggested outline for preparing a wildland fire behavior case study report, covering introduction, fire environment, analysis, and concluding remarks [54-57]. The report stresses the importance of systematic data collection, particularly recording the position of the head fire at various times [58, 59], and advises on handling information overload and seeking peer review for accuracy [58, 60].'}
+
+2026-01-11 23:55:58.260 | INFO     | __main__:run_pipeline:45 -
+[LLM RESPONSE]:
+ ### ACTION PLAN:
+
+1. Location: Starting Point (Grid Coordinates: 2.0,1.5)
+   Action: Deploy initial firefighting crews and set up command center.
+   Required Resources: Fire trucks, firefighting crews, command center equipment.
+   Reasoning: Establishing a command center is crucial for coordinating firefighting efforts and ensuring effective communication.
+   Navigation Hint: Head south on Ridge Road for 2 km, then turn east onto Firebreak Lane.
+
+2. Location: Ridge Area (Grid Coordinates: 2.5,2.0 to 4.0,3.5)
+   Action: Conduct aerial reconnaissance using Thermal IR drones.
+   Required Resources: Thermal IR drones, drone operators, data analysts.
+   Reasoning: Aerial reconnaissance helps identify hotspots, fire behavior, and potential spread patterns.
+   Navigation Hint: Fly drones along the ridge line, maintaining a distance of 500 meters from the fire.
+
+3. Location: Foothill Community Zone (Grid Coordinates: 4.5-6.5, 3.5-5.0)
+   Action: Evacuate residents and assist vulnerable individuals.
+   Required Resources: Fire trucks, evacuation buses, emergency staff.
+   Reasoning: Rapid fire spread towards homes necessitates immediate evacuation to prevent casualties.
+   Navigation Hint: Use Main Street to guide residents to the safe zone near the Town Hall.
+
+4. Location: Natural Drainage Gulch (Grid Coordinates: 4.5-6.5, 1.0)
+   Action: Establish a firebreak and monitor ember-spotting activity.
+   Required Resources: Fire trucks, firebreak equipment, firefighting crews.
+   Reasoning: A firebreak can help slow down the fire's progress, and monitoring ember-spotting can prevent new ignitions.
+   Navigation Hint: Create a firebreak along the gulch's edge, starting at (5.0,1.0) and extending to (5.5,1.0).
+
+5. Location: Human-made Access Road/Firebreak (Grid Coordinates: 3.0,0.5 to 5.0,5.0)
+   Action: Utilize the firebreak as a strategic firefighting line.
+   Required Resources: Fire trucks, firefighting crews.
+   Reasoning: The firebreak can serve as a barrier to slow down the fire's spread and provide a safe access route for firefighting crews.
+   Navigation Hint: Head east on Firebreak Lane from (3.0,0.5) to (5.0,5.0).
+
+6. Location: Evacuation Shelters (Grid Coordinates: 8.5,6.5 and 9.0,7.0)
+   Action: Prepare shelters for potential evacuees.
+   Required Resources: Shelter supplies, emergency staff.
+   Reasoning: Shelters provide a safe haven for evacuees and ensure their well-bering.
+   Navigation Hint: Head south on Highway 101 to reach the first shelter at (8.5,6.5), then continue to the second shelter at (9.0,7.0).
+
+### SOURCES USED:
+- Fire Management Today Volume 63, No. 4, Fall 2003, Region: International/United States/Australia/New Zealand
+- Retrieved Documents ---
