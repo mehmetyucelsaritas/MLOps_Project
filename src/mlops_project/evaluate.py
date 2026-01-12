@@ -30,18 +30,11 @@ config = {
     "model": "gemini-2.0-flash-lite",
     "temperature": 0.0,
     "max_tokens": None,
-    "top_p": 0.8,
+    "top_p": 1.0,
 }
 
 # Initialize with Google AI Studio
-evaluator_llm = LangchainLLMWrapper(
-    ChatGoogleGenerativeAI(
-        model=config["model"],
-        temperature=config["temperature"],
-        max_tokens=config["max_tokens"],
-        top_p=config["top_p"],
-    )
-)
+evaluator_llm = LangchainLLMWrapper(ChatGoogleGenerativeAI(model=config["model"], temperature=config["temperature"], max_tokens=config["max_tokens"], top_p=config["top_p"], max_retries=3, request_timeout=120))
 
 # Model mapping
 MODEL_PATHS = {"Mistral-7B": "models/mistral-7b-instruct-v0.2.Q4_K_M.gguf", "Phi-3": "models/Phi-3-mini-4k-instruct-q4.gguf", "TinyLlama": "models/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf"}
@@ -54,7 +47,6 @@ index_path = "models/index.faiss"
 with open(testset_path, "r", encoding="utf-8") as f:
     testset = json.load(f)
 
-# Comment from here:
 # Set up RAG pipeline once
 dataset = []
 timing_records = []
@@ -80,6 +72,7 @@ result = evaluate(
     metrics=[LLMContextPrecisionWithoutReference(), Faithfulness(), ResponseRelevancy()],
     llm=evaluator_llm,
     embeddings=embedding_model,
+    raise_exceptions=False,
 )
 print(result)
 
