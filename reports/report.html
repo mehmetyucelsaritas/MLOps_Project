@@ -49,7 +49,7 @@ will check the repositories and the code to verify your answers.</p>
 <li>[x] Used Hydra to load the configurations and manage your hyperparameters (M11)</li>
 <li>[x] Use profiling to optimize your code (M12)</li>
 <li>[x] Use logging to log important events in your code (M14)</li>
-<li>[ ] Use Weights &amp; Biases to log training progress and other important metrics/artifacts in your code (M14)</li>
+<li>[x] Use Weights &amp; Biases to log training progress and other important metrics/artifacts in your code (M14)</li>
 <li>[ ] Consider running a hyperparameter optimization sweep (M14)</li>
 <li>[ ] Use PyTorch-lightning (if applicable) to reduce the amount of boilerplate in your code (M15)</li>
 </ul>
@@ -119,6 +119,7 @@ will check the repositories and the code to verify your answers.</p>
 <em>package to do ... and ... in our project</em>.</p>
 <p>Answer:</p>
 </blockquote>
+<p>Due to significant hardware constraints I opted not to fine-tune a model. Instead, I focused on evaluating the performance of my RAG (Retrieval-Augmented Generation) pipeline using an "LLM-as-a-judge" approach.</p>
 <p>I chose to work with the <strong>FAISS (Facebook AI Similarity Search)</strong> library to implement the vector retrieval component of the project. FAISS played a critical role in building the Retrieval-Augmented Generation (RAG) pipeline by enabling efficient storage and similarity search over high-dimensional text embeddings.</p>
 <p>The FAISS library was used in two main stages of the system:</p>
 <ul>
@@ -242,7 +243,7 @@ corporate and increase the quality of your code.</p>
 </em>code and even if we were then...*</p>
 <p>Answer:</p>
 </blockquote>
-<p>Total coverage is 92%. No, achieving 100% code coverage does not guarantee that the code is free of errors. Code coverage only indicates the proportion of code executed during tests, but it does not reflect the quality of the tests or verify that the logic is correct. Even if every line is executed, bugs or logical errors may still exist. Furthermore, code coverage does not capture edge cases or unexpected inputs that could cause failures. Therefore, thorough testing and code reviews remain essential for ensuring code quality and reliability. In our project, we have <strong>100% code coverage</strong> for the embedding model (<code>embedding.py</code>) and the retrieve (<code>retrieve.py</code>). The training script and visualization script are included, but since I did not develop them, they are not covered by our tests.</p>
+<p>Total coverage is 92%. No, achieving 100% code coverage does not guarantee that the code is free of errors. Code coverage only indicates the proportion of code executed during tests, but it does not reflect the quality of the tests or verify that the logic is correct. Even if every line is executed, bugs or logical errors may still exist. Furthermore, code coverage does not capture edge cases or unexpected inputs that could cause failures. Therefore, thorough testing and code reviews remain essential for ensuring code quality and reliability. In our project, we have <strong>100% code coverage</strong> for the embedding model (<code>embedding.py</code>) and the retrieve (<code>retrieve.py</code>).</p>
 <h3>Question 9</h3>
 <blockquote>
 <p><strong>Did you workflow include using branches and pull requests? If yes, explain how. If not, explain how branches and</strong>
@@ -253,7 +254,7 @@ corporate and increase the quality of your code.</p>
 <em>addition to the main branch. To merge code we ...</em></p>
 <p>Answer:</p>
 </blockquote>
-<p>I used both feature branches and pull requests throughout the project. However, since I developed this project by myself ı used branches and pull requests less than I would use in my team projects. In theory, every new feature or modification is developed in its own branch. Each branch focused on a specific task: one branch set up a dedicated project environment to manage dependencies, completed the requirements.txt, enforced code formatting, configured version control, defined a configuration file for experiments, and created a GCP Bucket for data storage integrated with our data version control system. Another branch integrated log key metrics and artifacts. A separate branch was dedicated to writing unit tests for the data pipeline, model construction as well as measuring test coverage. Finally, an additional branch implemented a API service for model inference and added a workflow.</p>
+<p>I used both feature branches and pull requests throughout the project. However, since I developed this project by myself ı used branches and pull requests less than I would use in my team projects. In theory, every new feature or modification is developed in its own branch. Each branch would focuse on a specific task: one branch would set up a dedicated project environment to manage dependencies, complete the requirements.txt, enforce code formatting, configure version control, define a configuration file for experiments, and create a GCP Bucket for data storage integrated with data version control system. Another branch would integrate log key metrics and artifacts. A separate branch would dedicate to writing unit tests for the data pipeline, model construction as well as measuring test coverage. Finally, an additional branch would implemente a API service for model inference and added a workflow. However, I did them on main branch mostly.</p>
 <h3>Question 10</h3>
 <blockquote>
 <p><strong>Did you use DVC for managing data in your project? If yes, then how did it improve your project to have version</strong>
@@ -278,10 +279,10 @@ corporate and increase the quality of your code.</p>
 <em>here: <weblink></em></p>
 <p>Answer:</p>
 </blockquote>
-<p>I organized my continuous integration (CI) setup into <strong>two separate GitHub Actions workflows</strong>, each responsible for a different aspect of code quality and reliability: one for <strong>code formatting and linting</strong>, and one for <strong>unit testing</strong>.</p>
-<p>The first workflow focuses on <strong>code formatting and static analysis</strong>. It is triggered on every push and pull request to the <code>main</code> branch. In this pipeline, I use <strong>Ruff</strong> as both a linter and formatter to ensure a consistent coding style and to catch common issues early in the development process. The workflow runs on <code>ubuntu-latest</code> and sets up <strong>Python 3.11</strong> using <code>actions/setup-python</code>. To improve execution speed, I enable <strong>pip caching</strong>, specifying the dependency path via <code>setup.py</code>. This reduces dependency installation time on subsequent runs and keeps the feedback loop fast. By running formatting and linting automatically, I ensure that only clean and well-formatted code is merged.</p>
-<p>The second workflow is responsible for <strong>unit testing</strong> and overall correctness. It is triggered on pushes and pull requests to both the <code>main</code> and <code>master</code> branches. This workflow uses a <strong>matrix strategy</strong> to test the project across multiple environments, specifically <strong>two operating systems</strong> (<code>ubuntu-latest</code> and <code>windows-latest</code>) and <strong>two Python versions</strong> (<code>3.12</code> and <code>3.13</code>). This setup helps verify cross-platform compatibility and prepares the project for newer Python releases. Dependencies are installed from <code>requirements.txt</code>, and the project itself is installed in editable mode. Tests are then executed using <strong>pytest</strong> with verbose output. Pip caching is also enabled here to speed up repeated runs.</p>
-<p>Overall, this CI setup ensures <strong>code quality, correctness, and portability</strong>, while providing fast and automated feedback throughout development. <a href="https://github.com/mehmetyucelsaritas/MLOps_Project/blob/main/.github/workflows/test.yaml">Check one of gitHub action – Run tests workflow</a></p>
+<p>I organized my continuous integration (CI) setup into <strong>three separate GitHub Actions workflows</strong>, each responsible for a different aspect of code quality and reliability: one for <strong>code formatting and linting</strong>, one for <strong>unit testing</strong> and other for <strong>pre-committing.</strong>.</p>
+<p>The first workflow focuses on <strong>code formatting and static analysis</strong>. It is triggered on every push and pull request to the <code>main</code> branch. In this pipeline, I use <strong>Ruff</strong> as both a linter and formatter to ensure a consistent coding style and to catch common issues early in the development process. The workflow runs on <code>ubuntu-latest</code> and sets up <strong>Python 3.11</strong> using <code>actions/setup-python</code>. To improve execution speed, I enable <strong>pip caching</strong>, specifying the dependency path. This reduces dependency installation time on subsequent runs and keeps the feedback loop fast. By running formatting and linting automatically, I ensure that only clean and well-formatted code is merged.</p>
+<p>The second workflow is responsible for <strong>unit testing</strong> and overall correctness. It is triggered on pushes and pull requests to the <code>main</code> branch. This workflow uses a <strong>matrix strategy</strong> to test the project across multiple environments, specifically <strong>two operating systems</strong> (<code>ubuntu-latest</code> and <code>windows-latest</code>) and <strong>two Python versions</strong> (<code>3.12</code> and <code>3.13</code>). This setup helps verify cross-platform compatibility and prepares the project for newer Python releases. Dependencies are installed from <code>requirements.txt</code>, and the project itself is installed in editable mode. Tests are then executed using <strong>pytest</strong> with verbose output. Pip caching is also enabled here to speed up repeated runs.</p>
+<p>Overall, this CI setup ensures <strong>code quality, correctness, and portability</strong>, while providing fast and automated feedback throughout development. <a href="https://github.com/mehmetyucelsaritas/MLOps_Project/blob/main/.github/workflows/test.yaml">Check one of my GitHub action – Run tests workflow</a></p>
 <h2>Running code and tracking experiments</h2>
 <blockquote>
 <p>In the following section we are interested in learning more about the experimental setup for running your code and
@@ -326,7 +327,7 @@ or override it:</p>
 <em>As seen in the second image we are also tracking ... and ...</em></p>
 <p>Answer:</p>
 </blockquote>
-<p>Due to significant hardware constraints—where even standard inference requires 3–5 minutes on cloud and 1 minute on local machine per query—I opted not to fine-tune a model. Instead, I focused on evaluating the performance of my RAG (Retrieval-Augmented Generation) pipeline using an <strong>"LLM-as-a-judge"</strong> approach. I utilized Weights &amp; Biases to log these evaluation metrics to ensure the system remains factual and relevant despite the inability to perform retraining.</p>
+<p>Due to significant hardware constraints—where even standard inference requires 3–5 minutes on cloud and 1 minute on local machine (M4 Macbook Air) per query—I opted not to fine-tune a model. Instead, I focused on evaluating the performance of my RAG (Retrieval-Augmented Generation) pipeline using an <strong>"LLM-as-a-judge"</strong> approach. I utilized Weights &amp; Biases to log these evaluation metrics to ensure the system remains factual and relevant despite the inability to perform retraining.</p>
 <p><img alt="RAG Evaluation Metrics" src="figures/firegpt-wandb.png" /></p>
 <p>As seen in the charts above, I am tracking four distinct metrics that provide a view of the pipeline's performance:</p>
 <ul>
@@ -376,11 +377,9 @@ Here is a link to one of my <a href="https://github.com/mehmetyucelsaritas/MLOps
 </blockquote>
 <p>I utilized the following Google Cloud Platform services to build, deploy, and manage the infrastructure for this project:</p>
 <ul>
-<li><strong>Compute Engine:</strong> I used this to provision and manage the virtual machines that host the core application workloads.</li>
 <li><strong>Cloud Run &amp; Cloud Functions:</strong> I deployed serverless containers using Cloud Run and executed lightweight, event-driven code snippets via Cloud Functions.</li>
 <li><strong>Artifact Registry &amp; Cloud Build:</strong> I set up these services to automate the CI/CD pipeline, building container images and storing them securely.</li>
 <li><strong>Cloud Storage:</strong> I employed this for scalable object storage to save files and data blobs.</li>
-<li><strong>Vertex AI:</strong> I leveraged this service to support machine learning model operations.</li>
 <li><strong>Security &amp; Identity (IAM, Secret Manager, PAM):</strong> I used <strong>IAM</strong> for permission management, and <strong>Secret Manager</strong> to store sensitive credentials.</li>
 </ul>
 <h3>Question 18</h3>
@@ -426,7 +425,7 @@ Here is a link to one of my <a href="https://github.com/mehmetyucelsaritas/MLOps
 <em>was because ...</em></p>
 <p>Answer:</p>
 </blockquote>
-<p>I did not train the main model of my project in the cloud using either <strong>Google Compute Engine</strong> or <strong>Vertex AI</strong>. While I did train basic and small-scale models in cloud-based exercises, training even relatively small large language models (LLMs) requires substantial computational resources, particularly access to high-performance GPUs. Unfortunately, my cloud account did not provide access to GPU-enabled instances, and CPU-only training would have required an impractically long time.</p>
+<p>I did not train the main model of my project in the cloud using either <strong>Google Compute Engine</strong> or <strong>Vertex AI</strong>. While I did train basic and small-scale models in cloud-based exercises in MLOps course, training even relatively small large language models (LLMs) requires substantial computational resources, particularly access to high-performance GPUs. Unfortunately, my cloud account did not provide access to GPU-enabled instances, and CPU-only training would have required an impractically long time.</p>
 <p>Because of these limitations, I focused on designing and validating the overall pipeline, model integration, and deployment strategy rather than performing full-scale model training in the cloud. This allowed me to concentrate on reproducibility, containerization, and serving the model efficiently.</p>
 <p>If GPU access had been available, Vertex AI would have been a suitable choice due to its managed training jobs and scalability. Due to the hardware constraints and time considerations, training the full model locally or using pre-trained models was the most practical and efficient approach for this project.</p>
 <h2>Deployment</h2>
@@ -441,11 +440,11 @@ Here is a link to one of my <a href="https://github.com/mehmetyucelsaritas/MLOps
 <p>Answer:</p>
 </blockquote>
 <p>Yes, I successfully developed an API for our RAG model using <strong>FastAPI</strong>.
-To ensure efficient resource usage and low-latency inference, we implemented a <strong>lifespan context manager</strong> using <code>@asynccontextmanager</code>. This design allows heavy resources—such as the <strong>Hydra configuration</strong>, <strong>metadata loaders (JsonHandler)</strong>, and the <strong>LLM pipeline (RAGPipeline)</strong>—to be initialized <strong>only once at application startup</strong>, rather than being reloaded for every incoming request.</p>
+To ensure efficient resource usage and low-latency inference, I implemented a <strong>lifespan context manager</strong> using <code>@asynccontextmanager</code>. This design allows heavy resources—such as the <strong>Hydra configuration</strong>, <strong>metadata loaders (JsonHandler)</strong>, and the <strong>LLM pipeline (RAGPipeline)</strong>—to be initialized <strong>only once at application startup</strong>, rather than being reloaded for every incoming request.</p>
 <p>A notable implementation detail involved <strong>argument parsing</strong>. Since our custom configuration <code>Parser</code> could conflict with <strong>Uvicorn’s command-line arguments</strong>, we temporarily overrode <code>sys.argv</code> inside the lifespan function. This ensured that our project-specific configurations could be loaded safely without interfering with the ASGI server.</p>
 <p>The API exposes two main endpoints:
 - <strong><code>/health</code></strong>: Verifies that all pipeline resources have been successfully loaded.
-- <strong><code>/inference</code></strong>: Accepts a user query via a <strong>Pydantic model</strong>, retrieves relevant context using the <code>Retrieve</code> class, and passes it to the preloaded <code>rag_pipeline</code> to generate and return the final response.</p>
+- <strong><code>/inference</code></strong>: Accepts a user query , retrieves relevant context using the <code>Retrieve</code> class, and passes it to the preloaded <code>rag_pipeline</code> to generate and return the final response.</p>
 <h3>Question 24</h3>
 <blockquote>
 <p><strong>Did you manage to deploy your API, either in locally or cloud? If not, describe why. If yes, describe how and</strong>
@@ -505,7 +504,7 @@ To ensure efficient resource usage and low-latency inference, we implemented a <
 <em>costing the most was ... due to ... . Working in the cloud was ...</em></p>
 <p>Answer:</p>
 </blockquote>
-<p><strong>Cloud Usage and Cost Analysis</strong>: A total of <strong>€15.04</strong> was spent during the development of this project. The most expensive service by a significant margin was <strong>Google Compute Engine</strong>, with a cost of <strong>€10.29</strong>  and <strong>Google Compute Run</strong> with <strong>€3.48</strong> which is most likely due to the continuous runtime costs of virtual machine instances used during development and deployment. Other services contributed only negligibly cost.</p>
+<p><strong>Cloud Usage and Cost Analysis</strong>: A total of <strong>€19.23</strong> was spent during the development of this project. The most expensive service by a significant margin was <strong>Google Compute Engine</strong>, with a cost of <strong>€10.29</strong> (I forgot to close vm :D) and <strong>Google Compute Run</strong> with <strong>€6.52</strong> which is due to the runtime costs of deployed docker image used during development and deployment. Other services contributed only negligibly cost.</p>
 <p><strong>Experience of Working in the Cloud</strong>: My overall experience of working in the cloud was ultimately positive. At the beginning, the process was challenging due to the steep learning curve. Setting up the cloud environment, managing permissions and roles, and understanding the billing structure in order to avoid unnecessary costs required considerable effort and attention.</p>
 <p>However, once the initial setup phase was completed, the advantages of cloud computing became very clear. The cloud ecosystem provides a wide range of well-integrated services that simplify development workflows and greatly improve productivity. Despite the high barrier to entry, I think the flexibility, scalability, and efficiency offered by cloud infrastructure make it an invaluable tool for modern software and machine learning development.</p>
 <h3>Question 28</h3>
@@ -549,7 +548,7 @@ Upon a push, <strong>GitHub Actions</strong> triggers a suite of automated check
 <p><strong>4. Continuous Deployment (CD)</strong>
 Simultaneously, the commit triggers a <strong>Cloud Build</strong> process within the Cloud environment (GCP).
 * <strong>Build &amp; Store:</strong> The application is containerized and pushed to the <strong>Artifact Registry</strong>.
-* <strong>Deploy:</strong> <strong>Cloud Run</strong> consumes the container to deploy the application, exposing a <strong>FastAPI</strong> endpoint.
+* <strong>Deploy:</strong> <strong>Cloud Run</strong> consumes the container to deploy the application.
 * <strong>Support Services:</strong> The system utilizes <strong>Cloud Storage</strong> for managing artifacts and models, while <strong>Cloud Monitoring</strong> handles logging and error tracking for the deployed service.</p>
 <h3>Question 30</h3>
 <blockquote>
@@ -562,7 +561,7 @@ Simultaneously, the commit triggers a <strong>Cloud Build</strong> process withi
 </blockquote>
 <p>The project involved several significant challenges, both in terms of system integration and infrastructure management. One of the earliest and most time-consuming difficulties was making <strong>Hydra compatible with FastAPI</strong>. Hydra is designed to take control of application entry points and configuration management, which conflicted with FastAPI’s lifecycle and request-based execution model. This resulted in multiple runtime errors related to configuration paths, missing keys, and repeated initialization. I spent a considerable amount of time debugging these issues, restructuring the codebase, and separating configuration logic from request handling. Eventually, I resolved this by introducing clearer configuration boundaries and explicitly controlling when and how Hydra was initialized within the application.</p>
 <p>Another major challenge was <strong>initializing and configuring cloud services</strong>. Setting up the cloud environment required careful handling of permissions, service accounts, networking rules, and billing constraints. This process was time-consuming. I overcame this challenge through incremental setup, extensive use of logging, and frequent validation of each service component before moving on to the next step.</p>
-<p>The most challenging part of the project, however, was <strong>building Docker images and deploying them to the cloud</strong>, particularly because the project relies on large language models. Even the smallest LLMs used in the project were in the range of 2–4 GB, which significantly complicated containerization. Docker build times were long, image sizes were large, and deployments frequently failed due to memory limits, timeout issues, or storage constraints. To overcome this, I experimented with different base images, optimized Docker layers, removed unnecessary dependencies, and carefully managed model loading strategies. I also iteratively tested builds locally before pushing them to the cloud to reduce failure cycles.</p>
+<p>The most challenging part of the project, however, was <strong>building Docker images and deploying them to the cloud</strong>, particularly because the project relies on large language models. Even the smallest LLMs used in the project were in the range of 2–4 GB, which significantly complicated containerization. Docker build times were long, image sizes were large, and deployments frequently failed due to memory limits, timeout issues, or storage constraints. To overcome this, I experimented with different base images, removed unnecessary dependencies, and carefully managed model loading strategies. I also iteratively tested builds locally before pushing them to the cloud to reduce failure cycles.</p>
 <h3>Question 31</h3>
 <blockquote>
 <p><strong>State the individual contributions of each team member. This is required information from DTU, because we need to</strong>
@@ -577,7 +576,7 @@ Simultaneously, the commit triggers a <strong>Cloud Build</strong> process withi
 <em>We have used ChatGPT to help debug our code. Additionally, we used GitHub Copilot to help write some of our code.</em>
 Answer:</p>
 </blockquote>
-<p>This project was primarily carried out as an individual effort by student s256629. I was the only registered group member working on the project and was responsible for all core development and MLOps practices throughout the course. Due to the scope and complexity of the project, I started working slightly earlier than the official course start.</p>
+<p>This project was primarily carried out as an individual effort by student s256629. I was the only registered group member working on the project and was responsible for all core development and MLOps practices throughout the course. Due to the scope and complexity of the project, I started working earlier than the official course start.</p>
 <p>I initialized the repository and defined the overall project structure. I was responsible for configuration management, data processing pipelines, model development, experiment tracking, and versioning. I also implemented the full MLOps workflow, including building APIs, integrating system components, and deploying the model to the cloud. Debugging, testing, and end-to-end system integration were entirely handled by me.</p>
 <p>In addition to my individual work, I received limited technical support from colleagues at the Technical University of Munich who were not registered for this course. Some colleagues assisted with implementing Python files in the <code>rag_llm</code> folder under <code>src/mlops_project/</code>, and others helped with building the Streamlit-based user interface. These contributions were limited to implementation support, while overall system design, integration, and final responsibility remained with me.</p>
 <p>Generative AI tools were used in a supportive manner during the project. ChatGPT was used to refine and improve the writing quality of the final report and to assist in developing and validating API test cases. All generated suggestions were reviewed and adapted manually to ensure correctness and full understanding. No generative AI tools were used to automatically generate core project logic without my verification.</p>
