@@ -5,4 +5,4 @@ src/mlops_project/evaluate/*
 *.idea
 TODO.txt
 exercises/*
-configs/outputs/*
+*.env
