@@ -6,3 +6,4 @@ TODO.txt
 exercises/*
 *.env
 src/mlops_project/evaluate/*
+wandb/*
