@@ -412,7 +412,16 @@ The `Parser` class connects config files with command-line arguments, allowing s
 >
 > Answer:
 
---- question 14 fill here ---
+Due to significant hardware constraints—where even standard inference requires 3–5 minutes on cloud and 1 minute on local machine per query—I opted not to fine-tune a model. Instead, I focused on evaluating the performance of my RAG (Retrieval-Augmented Generation) pipeline using an **"LLM-as-a-judge"** approach. I utilized Weights & Biases to log these evaluation metrics to ensure the system remains factual and relevant despite the inability to perform retraining.
+
+![RAG Evaluation Metrics](figures/firegpt-wandb.png)
+
+As seen in the charts above, I am tracking four distinct metrics that provide a view of the pipeline's performance:
+
+* **Faithfulness (Top Center):** This is the most critical metric for my deployment to prevent hallucinations. It measures whether the generated answer is derived solely from the retrieved context. As shown in the logs, while some queries like `query_4` achieved a perfect score (1.0), others scored lower, indicating areas where the generation step needs prompt engineering improvements.
+* **Answer Relevancy (Top Left):** I track this to assess how pertinent the generated response is to the user's initial prompt. This helps me distinguish between an answer that is factually true but irrelevant, versus one that directly addresses the user's intent.
+* **Context Precision (Top Right):** This metric evaluates the retrieval system rather than the generation. It measures the proportion of relevant chunks in the retrieved context. High scores here (as seen in `query_2` and `query_3`) confirm that my embedding and retrieval strategy is effectively finding the right documents.
+* **Response Time (Bottom Left):** I logged the latency per query to monitor the system's efficiency. The graph confirms high latency (ranging from 75 to 100+ seconds), quantitatively validating the hardware limitations I face and highlighting the need for future inference optimization or quantization.
 
 ### Question 15
 
