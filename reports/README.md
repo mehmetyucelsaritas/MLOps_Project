@@ -70,7 +70,7 @@ will check the repositories and the code to verify your answers.
 * [x] Used Hydra to load the configurations and manage your hyperparameters (M11)
 * [x] Use profiling to optimize your code (M12)
 * [x] Use logging to log important events in your code (M14)
-* [ ] Use Weights & Biases to log training progress and other important metrics/artifacts in your code (M14)
+* [x] Use Weights & Biases to log training progress and other important metrics/artifacts in your code (M14)
 * [ ] Consider running a hyperparameter optimization sweep (M14)
 * [ ] Use PyTorch-lightning (if applicable) to reduce the amount of boilerplate in your code (M15)
 
@@ -146,6 +146,8 @@ s256629
 > *package to do ... and ... in our project*.
 >
 > Answer:
+
+Due to significant hardware constraints I opted not to fine-tune a model. Instead, I focused on evaluating the performance of my RAG (Retrieval-Augmented Generation) pipeline using an "LLM-as-a-judge" approach.
 
 I chose to work with the **FAISS (Facebook AI Similarity Search)** library to implement the vector retrieval component of the project. FAISS played a critical role in building the Retrieval-Augmented Generation (RAG) pipeline by enabling efficient storage and similarity search over high-dimensional text embeddings.
 
@@ -288,7 +290,7 @@ In total, I implemented **around 16 tests** covering unit, integration behavior 
 >
 > Answer:
 
-Total coverage is 92%. No, achieving 100% code coverage does not guarantee that the code is free of errors. Code coverage only indicates the proportion of code executed during tests, but it does not reflect the quality of the tests or verify that the logic is correct. Even if every line is executed, bugs or logical errors may still exist. Furthermore, code coverage does not capture edge cases or unexpected inputs that could cause failures. Therefore, thorough testing and code reviews remain essential for ensuring code quality and reliability. In our project, we have **100% code coverage** for the embedding model (`embedding.py`) and the retrieve (`retrieve.py`). The training script and visualization script are included, but since I did not develop them, they are not covered by our tests.
+Total coverage is 92%. No, achieving 100% code coverage does not guarantee that the code is free of errors. Code coverage only indicates the proportion of code executed during tests, but it does not reflect the quality of the tests or verify that the logic is correct. Even if every line is executed, bugs or logical errors may still exist. Furthermore, code coverage does not capture edge cases or unexpected inputs that could cause failures. Therefore, thorough testing and code reviews remain essential for ensuring code quality and reliability. In our project, we have **100% code coverage** for the embedding model (`embedding.py`) and the retrieve (`retrieve.py`).
 
 
 ### Question 9
@@ -304,7 +306,7 @@ Total coverage is 92%. No, achieving 100% code coverage does not guarantee that 
 >
 > Answer:
 
-I used both feature branches and pull requests throughout the project. However, since I developed this project by myself ı used branches and pull requests less than I would use in my team projects. In theory, every new feature or modification is developed in its own branch. Each branch focused on a specific task: one branch set up a dedicated project environment to manage dependencies, completed the requirements.txt, enforced code formatting, configured version control, defined a configuration file for experiments, and created a GCP Bucket for data storage integrated with our data version control system. Another branch integrated log key metrics and artifacts. A separate branch was dedicated to writing unit tests for the data pipeline, model construction as well as measuring test coverage. Finally, an additional branch implemented a API service for model inference and added a workflow.
+I used both feature branches and pull requests throughout the project. However, since I developed this project by myself ı used branches and pull requests less than I would use in my team projects. In theory, every new feature or modification is developed in its own branch. Each branch would focuse on a specific task: one branch would set up a dedicated project environment to manage dependencies, complete the requirements.txt, enforce code formatting, configure version control, define a configuration file for experiments, and create a GCP Bucket for data storage integrated with data version control system. Another branch would integrate log key metrics and artifacts. A separate branch would dedicate to writing unit tests for the data pipeline, model construction as well as measuring test coverage. Finally, an additional branch would implemente a API service for model inference and added a workflow. However, I did them on main branch mostly.
 
 ### Question 10
 
@@ -338,13 +340,13 @@ Even though I did not fully rely on DVC for managing large datasets, having DVC 
 >
 > Answer:
 
-I organized my continuous integration (CI) setup into **two separate GitHub Actions workflows**, each responsible for a different aspect of code quality and reliability: one for **code formatting and linting**, and one for **unit testing**.
+I organized my continuous integration (CI) setup into **three separate GitHub Actions workflows**, each responsible for a different aspect of code quality and reliability: one for **code formatting and linting**, one for **unit testing** and other for **pre-committing.**.
 
-The first workflow focuses on **code formatting and static analysis**. It is triggered on every push and pull request to the `main` branch. In this pipeline, I use **Ruff** as both a linter and formatter to ensure a consistent coding style and to catch common issues early in the development process. The workflow runs on `ubuntu-latest` and sets up **Python 3.11** using `actions/setup-python`. To improve execution speed, I enable **pip caching**, specifying the dependency path via `setup.py`. This reduces dependency installation time on subsequent runs and keeps the feedback loop fast. By running formatting and linting automatically, I ensure that only clean and well-formatted code is merged.
+The first workflow focuses on **code formatting and static analysis**. It is triggered on every push and pull request to the `main` branch. In this pipeline, I use **Ruff** as both a linter and formatter to ensure a consistent coding style and to catch common issues early in the development process. The workflow runs on `ubuntu-latest` and sets up **Python 3.11** using `actions/setup-python`. To improve execution speed, I enable **pip caching**, specifying the dependency path. This reduces dependency installation time on subsequent runs and keeps the feedback loop fast. By running formatting and linting automatically, I ensure that only clean and well-formatted code is merged.
 
-The second workflow is responsible for **unit testing** and overall correctness. It is triggered on pushes and pull requests to both the `main` and `master` branches. This workflow uses a **matrix strategy** to test the project across multiple environments, specifically **two operating systems** (`ubuntu-latest` and `windows-latest`) and **two Python versions** (`3.12` and `3.13`). This setup helps verify cross-platform compatibility and prepares the project for newer Python releases. Dependencies are installed from `requirements.txt`, and the project itself is installed in editable mode. Tests are then executed using **pytest** with verbose output. Pip caching is also enabled here to speed up repeated runs.
+The second workflow is responsible for **unit testing** and overall correctness. It is triggered on pushes and pull requests to the `main` branch. This workflow uses a **matrix strategy** to test the project across multiple environments, specifically **two operating systems** (`ubuntu-latest` and `windows-latest`) and **two Python versions** (`3.12` and `3.13`). This setup helps verify cross-platform compatibility and prepares the project for newer Python releases. Dependencies are installed from `requirements.txt`, and the project itself is installed in editable mode. Tests are then executed using **pytest** with verbose output. Pip caching is also enabled here to speed up repeated runs.
 
-Overall, this CI setup ensures **code quality, correctness, and portability**, while providing fast and automated feedback throughout development. [Check one of gitHub action – Run tests workflow](https://github.com/mehmetyucelsaritas/MLOps_Project/blob/main/.github/workflows/test.yaml)
+Overall, this CI setup ensures **code quality, correctness, and portability**, while providing fast and automated feedback throughout development. [Check one of my GitHub action – Run tests workflow](https://github.com/mehmetyucelsaritas/MLOps_Project/blob/main/.github/workflows/test.yaml)
 
 
 ## Running code and tracking experiments
@@ -412,7 +414,7 @@ The `Parser` class connects config files with command-line arguments, allowing s
 >
 > Answer:
 
-Due to significant hardware constraints—where even standard inference requires 3–5 minutes on cloud and 1 minute on local machine per query—I opted not to fine-tune a model. Instead, I focused on evaluating the performance of my RAG (Retrieval-Augmented Generation) pipeline using an **"LLM-as-a-judge"** approach. I utilized Weights & Biases to log these evaluation metrics to ensure the system remains factual and relevant despite the inability to perform retraining.
+Due to significant hardware constraints—where even standard inference requires 3–5 minutes on cloud and 1 minute on local machine (M4 Macbook Air) per query—I opted not to fine-tune a model. Instead, I focused on evaluating the performance of my RAG (Retrieval-Augmented Generation) pipeline using an **"LLM-as-a-judge"** approach. I utilized Weights & Biases to log these evaluation metrics to ensure the system remains factual and relevant despite the inability to perform retraining.
 
 ![RAG Evaluation Metrics](figures/firegpt-wandb.png)
 
@@ -483,11 +485,9 @@ In addition to debugging, I performed basic performance profiling using Python�
 
 I utilized the following Google Cloud Platform services to build, deploy, and manage the infrastructure for this project:
 
-* **Compute Engine:** I used this to provision and manage the virtual machines that host the core application workloads.
 * **Cloud Run & Cloud Functions:** I deployed serverless containers using Cloud Run and executed lightweight, event-driven code snippets via Cloud Functions.
 * **Artifact Registry & Cloud Build:** I set up these services to automate the CI/CD pipeline, building container images and storing them securely.
 * **Cloud Storage:** I employed this for scalable object storage to save files and data blobs.
-* **Vertex AI:** I leveraged this service to support machine learning model operations.
 * **Security & Identity (IAM, Secret Manager, PAM):** I used **IAM** for permission management, and **Secret Manager** to store sensitive credentials.
 
 ### Question 18
@@ -547,7 +547,7 @@ If direct VM usage were required (e.g., for custom networking, GPU workloads, or
 >
 > Answer:
 
-I did not train the main model of my project in the cloud using either **Google Compute Engine** or **Vertex AI**. While I did train basic and small-scale models in cloud-based exercises, training even relatively small large language models (LLMs) requires substantial computational resources, particularly access to high-performance GPUs. Unfortunately, my cloud account did not provide access to GPU-enabled instances, and CPU-only training would have required an impractically long time.
+I did not train the main model of my project in the cloud using either **Google Compute Engine** or **Vertex AI**. While I did train basic and small-scale models in cloud-based exercises in MLOps course, training even relatively small large language models (LLMs) requires substantial computational resources, particularly access to high-performance GPUs. Unfortunately, my cloud account did not provide access to GPU-enabled instances, and CPU-only training would have required an impractically long time.
 
 Because of these limitations, I focused on designing and validating the overall pipeline, model integration, and deployment strategy rather than performing full-scale model training in the cloud. This allowed me to concentrate on reproducibility, containerization, and serving the model efficiently.
 
@@ -569,13 +569,13 @@ If GPU access had been available, Vertex AI would have been a suitable choice du
 > Answer:
 
 Yes, I successfully developed an API for our RAG model using **FastAPI**.
-To ensure efficient resource usage and low-latency inference, we implemented a **lifespan context manager** using `@asynccontextmanager`. This design allows heavy resources—such as the **Hydra configuration**, **metadata loaders (JsonHandler)**, and the **LLM pipeline (RAGPipeline)**—to be initialized **only once at application startup**, rather than being reloaded for every incoming request.
+To ensure efficient resource usage and low-latency inference, I implemented a **lifespan context manager** using `@asynccontextmanager`. This design allows heavy resources—such as the **Hydra configuration**, **metadata loaders (JsonHandler)**, and the **LLM pipeline (RAGPipeline)**—to be initialized **only once at application startup**, rather than being reloaded for every incoming request.
 
 A notable implementation detail involved **argument parsing**. Since our custom configuration `Parser` could conflict with **Uvicorn’s command-line arguments**, we temporarily overrode `sys.argv` inside the lifespan function. This ensured that our project-specific configurations could be loaded safely without interfering with the ASGI server.
 
 The API exposes two main endpoints:
 - **`/health`**: Verifies that all pipeline resources have been successfully loaded.
-- **`/inference`**: Accepts a user query via a **Pydantic model**, retrieves relevant context using the `Retrieve` class, and passes it to the preloaded `rag_pipeline` to generate and return the final response.
+- **`/inference`**: Accepts a user query , retrieves relevant context using the `Retrieve` class, and passes it to the preloaded `rag_pipeline` to generate and return the final response.
 
 
 ### Question 24
@@ -661,7 +661,7 @@ To ensure the longevity of the application, I also implemented a **Service Level
 >
 > Answer:
 
-**Cloud Usage and Cost Analysis**: A total of **€15.04** was spent during the development of this project. The most expensive service by a significant margin was **Google Compute Engine**, with a cost of **€10.29**  and **Google Compute Run** with **€3.48** which is most likely due to the continuous runtime costs of virtual machine instances used during development and deployment. Other services contributed only negligibly cost.
+**Cloud Usage and Cost Analysis**: A total of **€19.23** was spent during the development of this project. The most expensive service by a significant margin was **Google Compute Engine**, with a cost of **€10.29** (I forgot to close vm :D) and **Google Compute Run** with **€6.52** which is due to the runtime costs of deployed docker image used during development and deployment. Other services contributed only negligibly cost.
 
 **Experience of Working in the Cloud**: My overall experience of working in the cloud was ultimately positive. At the beginning, the process was challenging due to the steep learning curve. Setting up the cloud environment, managing permissions and roles, and understanding the billing structure in order to avoid unnecessary costs required considerable effort and attention.
 
@@ -723,7 +723,7 @@ Upon a push, **GitHub Actions** triggers a suite of automated checks to ensure c
 **4. Continuous Deployment (CD)**
 Simultaneously, the commit triggers a **Cloud Build** process within the Cloud environment (GCP).
 * **Build & Store:** The application is containerized and pushed to the **Artifact Registry**.
-* **Deploy:** **Cloud Run** consumes the container to deploy the application, exposing a **FastAPI** endpoint.
+* **Deploy:** **Cloud Run** consumes the container to deploy the application.
 * **Support Services:** The system utilizes **Cloud Storage** for managing artifacts and models, while **Cloud Monitoring** handles logging and error tracking for the deployed service.
 
 ### Question 30
@@ -742,7 +742,7 @@ The project involved several significant challenges, both in terms of system int
 
 Another major challenge was **initializing and configuring cloud services**. Setting up the cloud environment required careful handling of permissions, service accounts, networking rules, and billing constraints. This process was time-consuming. I overcame this challenge through incremental setup, extensive use of logging, and frequent validation of each service component before moving on to the next step.
 
-The most challenging part of the project, however, was **building Docker images and deploying them to the cloud**, particularly because the project relies on large language models. Even the smallest LLMs used in the project were in the range of 2–4 GB, which significantly complicated containerization. Docker build times were long, image sizes were large, and deployments frequently failed due to memory limits, timeout issues, or storage constraints. To overcome this, I experimented with different base images, optimized Docker layers, removed unnecessary dependencies, and carefully managed model loading strategies. I also iteratively tested builds locally before pushing them to the cloud to reduce failure cycles.
+The most challenging part of the project, however, was **building Docker images and deploying them to the cloud**, particularly because the project relies on large language models. Even the smallest LLMs used in the project were in the range of 2–4 GB, which significantly complicated containerization. Docker build times were long, image sizes were large, and deployments frequently failed due to memory limits, timeout issues, or storage constraints. To overcome this, I experimented with different base images, removed unnecessary dependencies, and carefully managed model loading strategies. I also iteratively tested builds locally before pushing them to the cloud to reduce failure cycles.
 
 ### Question 31
 
@@ -760,7 +760,7 @@ The most challenging part of the project, however, was **building Docker images 
 > *We have used ChatGPT to help debug our code. Additionally, we used GitHub Copilot to help write some of our code.*
 > Answer:
 
-This project was primarily carried out as an individual effort by student s256629. I was the only registered group member working on the project and was responsible for all core development and MLOps practices throughout the course. Due to the scope and complexity of the project, I started working slightly earlier than the official course start.
+This project was primarily carried out as an individual effort by student s256629. I was the only registered group member working on the project and was responsible for all core development and MLOps practices throughout the course. Due to the scope and complexity of the project, I started working earlier than the official course start.
 
 I initialized the repository and defined the overall project structure. I was responsible for configuration management, data processing pipelines, model development, experiment tracking, and versioning. I also implemented the full MLOps workflow, including building APIs, integrating system components, and deploying the model to the cloud. Debugging, testing, and end-to-end system integration were entirely handled by me.
 
