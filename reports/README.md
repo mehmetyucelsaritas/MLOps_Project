@@ -437,7 +437,7 @@ The container exposes port `8080` and uses **Streamlit** as the entry point to l
 ```
 docker build -f dockerfiles/firegpt.dockerfile . -t firegpt:latest ; docker run -p 8080:8080 -e PORT=8080 -it firegpt
 ```
-
+Here is a link to one of my [docker file](https://github.com/mehmetyucelsaritas/MLOps_Project/blob/main/dockerfiles/firegpt.dockerfile).
 
 ### Question 16
 
@@ -583,7 +583,13 @@ The API exposes two main endpoints:
 >
 > Answer:
 
---- question 24 fill here ---
+I did not deploy the API itself to production. Instead, I deployed the **GUI of my application**, which allowed end users to interact with the system through a web-based interface. The GUI wrapped the underlying RAG pipeline and enabled inference without exposing a public API endpoint. The application was accessible via a public link, but it is no longer reachable after **01/03/2026**.
+
+Here is link to the GUI application. (Note: It takes 5-15 seconds to open the GUI first and approxiamtely 3-4 minutes to respond on cloud and 50 seconds on macbook m4 local cpu respectively.)
+
+[https://firegpt-image-361370435150.europe-west4.run.app](https://firegpt-image-361370435150.europe-west4.run.app)
+
+In parallel, I implemented a **FastAPI-based inference API** for the project; however, this API was not deployed to the cloud. The FastAPI service is fully functional in a local setup. It uses FastAPI’s `lifespan` mechanism to load all required resources once at startup, including the Hydra configuration, metadata, retriever, and RAG pipeline. When running locally, the service can be invoked by sending a request to the inference endpoint.
 
 ### Question 25
 
@@ -646,9 +652,7 @@ To ensure the longevity of the application, I also implemented a **Service Level
 >
 > Answer:
 
-**Cloud Usage and Cost Analysis**: A total of **€15.04** was spent during the development of this project. The most expensive service by a significant margin was **Google Compute Engine**, with a cost of **€10.29**  and **Google Compute Run** with **€3.48** which is most likely due to the continuous runtime costs of virtual machine instances used during development and deployment.
-
-The second highest cost category was **Networking**, with a total expense of **€0.60**, which is significantly lower compared to Compute Engine. Other services contributed only negligibly cost.
+**Cloud Usage and Cost Analysis**: A total of **€15.04** was spent during the development of this project. The most expensive service by a significant margin was **Google Compute Engine**, with a cost of **€10.29**  and **Google Compute Run** with **€3.48** which is most likely due to the continuous runtime costs of virtual machine instances used during development and deployment. Other services contributed only negligibly cost.
 
 **Experience of Working in the Cloud**: My overall experience of working in the cloud was ultimately positive. At the beginning, the process was challenging due to the steep learning curve. Setting up the cloud environment, managing permissions and roles, and understanding the billing structure in order to avoid unnecessary costs required considerable effort and attention.
 
