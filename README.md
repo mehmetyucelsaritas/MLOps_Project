@@ -1,11 +1,11 @@
 
-# FireGPT: Intelligent Wildfire Response Assistant
+# FireGPT: Intelligent Wildfire Response Assistant Project Description
 
 ## 1. Overall Goal of the Project
 
-The primary goal of this project is to design and implement **FireGPT**, an intelligent, locally deployable decision support system intended to assist frontline wildfire responders in high-stakes emergency scenarios. Motivated by the increasing frequency and severity of wildfires due to climate change and human activities, the system addresses the urgent need for data-driven management in dynamic fire conditions.
+The primary goal of this project is to design and implement **FireGPT**, an intelligent, deployable decision support system intended to assist frontline wildfire responders in high-stakes emergency scenarios. Motivated by the increasing frequency and severity of wildfires due to climate change and human activities, the system addresses the urgent need for data-driven management in dynamic fire conditions.
 
-FireGPT integrates **Retrieval-Augmented Generation (RAG)** with a **Large Language Model (LLM)** to provide real-time, context-aware action plans. By prioritizing operational robustness and low-latency performance, FireGPT aims to bridge advanced AI techniques with practical field constraints to improve safety and response effectiveness.
+FireGPT integrates **Retrieval-Augmented Generation (RAG)** with a **Large Language Model (LLM)** to provide context-aware action plans. By prioritizing operational robustness and low-latency performance, FireGPT aims to bridge advanced AI techniques with practical field constraints to improve safety and response effectiveness.
 
 ## 2. Data Strategy (Initial & Pre-processing)
 
@@ -30,7 +30,7 @@ To prepare this data for the RAG pipeline, the following steps are taken:
 
 ## 3. Models and Technical Architecture
 
-The system is designed for local execution on resource-constrained hardware using models in the **GGUF format** via `llama.cpp`.
+The system is designed for both local and remote execution on resource-constrained hardware using models in the **GGUF format** via `llama.cpp`.
 
 ### Language Models (LLMs)
 
@@ -45,12 +45,30 @@ The project utilizes a modular orchestration layer that supports dynamic switchi
 - **Embedding Model:** **all-MiniLM-L6-v2** (Sentence Transformers) is used to encode text chunks into high-dimensional semantic vectors.
 - **Vector Store:** **FAISS** (Facebook AI Similarity Search) is employed to store vectors and perform efficient approximate nearest neighbor searches.
 
+# 🔥 FireGPT — Wildfire Decision Support with LLMs in Action
 
-# Getting started
+![Docker](https://img.shields.io/badge/Docker-Ready-blue?logo=docker)
+![Python](https://img.shields.io/badge/Python-3.10+-green?logo=python)
+![Models](https://img.shields.io/badge/LLM%20Size-1.1B–7B-orange)
+![Status](https://img.shields.io/badge/Service-Live-success)
 
-We provide a dockerfile to build the app and get its dependencies with less headache.
+## Quick Start
 
-First, install Docker for your platform.
+You can try FireGPT **without installation** using the live web demo:
+
+> **Best for:** First-time users, quick testing
+
+| Feature | Details |
+|---------|--------|
+| Initial Load Time | 5–15 seconds |
+| Query Response Time | 3–5 minutes |
+| Availability | Until **29/03/2026** |
+
+For an example quary, see the [Query section](#query) below.
+
+[![Open FireGPT Live Demo](https://img.shields.io/badge/Try%20Live-FireGPT-red?style=for-the-badge)](https://firegpt-image-361370435150.europe-west4.run.app)
+
+Alternatively, If you want to run it faster, It takes 30-50 second to respond on local machine (M4 macbook air), I provide a dockerfile to build the app and get its dependencies with less headache. First, If you do not have you docker already installed visit [official docker page to install docker.](https://www.docker.com/get-started/)
 
 Clone the repository:
 
@@ -62,8 +80,8 @@ Even though the LLM models are automatically downloaded in the docker image, we 
 ```
 pip install huggingface-hub
 
-hf download TheBloke/TinyLlama-1.1B-Chat-v1.0-GGUF tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf --local-dir ./models
 hf download TheBloke/Mistral-7B-Instruct-v0.2-GGUF  mistral-7b-instruct-v0.2.Q4_K_M.gguf --local-dir ./models
+hf download TheBloke/TinyLlama-1.1B-Chat-v1.0-GGUF tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf --local-dir ./models
 hf download microsoft/Phi-3-mini-4k-instruct-gguf Phi-3-mini-4k-instruct-q4.gguf --local-dir ./models
 ```
 
@@ -83,9 +101,7 @@ streamlit run src/mlops_project/gui/gui.py
 ```
 
 In the terminal you should see the link to the web interface.
-Otherwise go to http://127.0.0.1:8501
-
-For testing you can use following synthetic query (generated with ChatGPT, based on the Eaton Fire):
+Otherwise go to http://localhost:8501. For testing you can use following synthetic query (generated with ChatGPT, based on the Eaton Fire):
 
 ### Query
 I’m facing a wildfire that started at coordinate (2.0,1.5) in the northwest quadrant of our operational map (grid origin at top-left (0,0), units in km). The fire has spread southeast, roughly following a ridge from (2.5,2.0) to (4.0,3.5), and it’s approaching the foothill community zone in the rectangular area between X =4.5–6.5km and Y=3.5–5.0km. There’s a natural drainage gulch along Y ≈1.0 where ember‑spotting is common, and a human-made access road/firebreak runs at X ≈3.0 from Y=0.5 to Y=5.0. Two evacuation shelters are located outside the fire area at approximately (8.5,6.5) and (9.0,7.0).
@@ -95,7 +111,7 @@ We have available assets:
 • 1 Drone with water carrying ability
 • 2 trucks and crew
 
-### example result with mistral-7b:
+### Example result with mistral-7b:
 
     ACTION PLAN:
 
@@ -116,4 +132,4 @@ We have available assets:
         The South Canyon Fire Behavior Report, Region: Colorado, United States
 
 ### Queries for evaluation
-You can find test_queries.json under ./testset for evaluation. For your reference you can also find our evaluation results for each query with different models in ./eval/eval_results. M7 stands for Mistral-7B; P3 stands for Phi3 Mini; and TL stands for TinyLlama.
+You can find test_queries.json under ./data/testset/ for evaluation. For your reference you can also find our evaluation results for each query with different models in ./outputs/evaluation_results/. M7 stands for Mistral-7B; P3 stands for Phi3 Mini; and TL stands for TinyLlama.
