@@ -48,7 +48,6 @@ The project utilizes a modular orchestration layer that supports dynamic switchi
 # 🔥 FireGPT — Wildfire Decision Support with LLMs in Action
 
 ![Docker](https://img.shields.io/badge/Docker-Ready-blue?logo=docker)
-![Python](https://img.shields.io/badge/Python-3.10+-green?logo=python)
 ![Models](https://img.shields.io/badge/LLM%20Size-1.1B–7B-orange)
 ![Status](https://img.shields.io/badge/Service-Live-success)
 
@@ -64,7 +63,7 @@ You can try FireGPT **without installation** using the live web demo:
 | Query Response Time | 3–5 minutes |
 | Availability | Until **29/03/2026** |
 
-For an example quary, see the [Query section](#query) below.
+For an example query, see the [Query section](#query) below.
 
 [![Open FireGPT Live Demo](https://img.shields.io/badge/Try%20Live-FireGPT-red?style=for-the-badge)](https://firegpt-image-361370435150.europe-west4.run.app)
 
@@ -74,8 +73,9 @@ Clone the repository:
 
 ```
 git clone git@github.com:mehmetyucelsaritas/MLOps_Project.git
+cd MLOps_Project
 ```
-Even though the LLM models are automatically downloaded in the docker image, we recommend to download the models prior, as long recompilation caused by potential build issues can be avoided this way:
+Even though the LLM models are automatically downloaded in the docker image, we recommend to download the models prior, as long recompilation caused by potential build issues can be avoided this way. Depending on your internet speed it takes 10-20 minutes approximately.
 
 ```
 pip install huggingface-hub
@@ -85,13 +85,45 @@ hf download TheBloke/TinyLlama-1.1B-Chat-v1.0-GGUF tinyllama-1.1b-chat-v1.0.Q4_K
 hf download microsoft/Phi-3-mini-4k-instruct-gguf Phi-3-mini-4k-instruct-q4.gguf --local-dir ./models
 ```
 
-Next, execute this line in a terminal (PowerShell) in the repositories root:
+Next, execute this line in a terminal in the repositories root. Depending on your internet speed it takes 5-15 minutes approximately.
 
 ```
 docker build -f dockerfiles/firegpt.dockerfile . -t firegpt:latest ; docker run -p 8080:8080 -e PORT=8080 -it firegpt
 ```
 
-You can also use project scripts on terminal for processing data, building metadata, running firegpt and runnig firegpt gui respectively.
+At that point FireGPT is **ready to use**. You can run it on your local machine. In the terminal you should see the link to the web interface. Otherwise go to http://0.0.0.0:8080. For testing you can use following synthetic [query](#query) (generated with ChatGPT, based on the Eaton Fire):
+
+## Contribute to the project!
+If you want a contribution to project or run project on your local machine without docker container:
+
+Clone the repository:
+
+```
+git clone git@github.com:mehmetyucelsaritas/MLOps_Project.git
+cd MLOps_Project
+```
+
+First, install conda environment (recommended) from [anaconda official website](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html). Then execute the below command by changing <your_environment_name> with your desired environment name.
+
+```
+conda env create -f environment.yml -n <your_environment_name>
+conda activate <your_environment_name>
+```
+
+Second, makes the package importable without re-installing after code changes
+
+```
+pip install -e .
+```
+
+Third, download the models. Depending on your internet speed it takes 10-20 minutes approximately.
+```
+hf download TheBloke/Mistral-7B-Instruct-v0.2-GGUF  mistral-7b-instruct-v0.2.Q4_K_M.gguf --local-dir ./models
+hf download TheBloke/TinyLlama-1.1B-Chat-v1.0-GGUF tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf --local-dir ./models
+hf download microsoft/Phi-3-mini-4k-instruct-gguf Phi-3-mini-4k-instruct-q4.gguf --local-dir ./models
+```
+
+Finally, project is ready to go. You can use project scripts on terminal for processing data, building metadata, running firegpt and runnig firegpt gui respectively.
 
 ```
 data
@@ -100,8 +132,7 @@ python3 src/mlops_project/main.py
 streamlit run src/mlops_project/gui/gui.py
 ```
 
-In the terminal you should see the link to the web interface.
-Otherwise go to http://localhost:8501. For testing you can use following synthetic query (generated with ChatGPT, based on the Eaton Fire):
+For testing you can use following synthetic [query](#query) (generated with ChatGPT, based on the Eaton Fire):
 
 ### Query
 I’m facing a wildfire that started at coordinate (2.0,1.5) in the northwest quadrant of our operational map (grid origin at top-left (0,0), units in km). The fire has spread southeast, roughly following a ridge from (2.5,2.0) to (4.0,3.5), and it’s approaching the foothill community zone in the rectangular area between X =4.5–6.5km and Y=3.5–5.0km. There’s a natural drainage gulch along Y ≈1.0 where ember‑spotting is common, and a human-made access road/firebreak runs at X ≈3.0 from Y=0.5 to Y=5.0. Two evacuation shelters are located outside the fire area at approximately (8.5,6.5) and (9.0,7.0).
