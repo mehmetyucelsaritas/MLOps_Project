@@ -61,7 +61,7 @@ You can try FireGPT **without installation** using the live web demo:
 |---------|--------|
 | Initial Load Time | 5–15 seconds |
 | Query Response Time | 3–5 minutes |
-| Availability | Until **29/03/2026** |
+| Availability | Until **13/03/2026** |
 
 For an example query, see the [Query section](#query) below.
 
